@@ -122,6 +122,7 @@ In this work we try to take a holistic approach to the design and analysis of th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
 \section{Aeroelastic Modeling}
+\label{sec:aeroMoldLit}
 
 \section{Morphing Wings}
 Morphing wings as a means of control is an intuitive and readily understandable means of controlling an aircraft. In our daily life we often see birds flying and their primary mechanism of motion control is changing the shape of their wings. Not surprisingly then the first attempt at roll control was done via wing warping during the Wright brothers first flight. \cite{friswell2009prospects} The use of compliant wing morphing mechanisms quickly fell out of favor it seems likely this was due to the rise of the structural shell mechanism, for which the shell of the aircraft became the primary structural component. While aircrafts still used truss structures like that found in the Wright brother's plane the weight was reduced dramatically by having the shell bare the load. \cite{weisshaar2011aerospace} It seems likely that the additional engineering effort to make the shell compliant to actuation while resisting aeroloading and the relative ease at which traditional control surfaces could be manufactured resulted in the dormancy of morphing wing research.
@@ -136,7 +137,21 @@ One of the most successful Small Business Innovation Research (SBIR) in recent m
 The spiritual successor at AFRL to the ARW program is the AFRL Variable Camber Compliant Wing (VCCW) which shares a lot of similarities to the FlexSys system. The VCCW is focused on optimization of the variable camber design by combining the the leading and trailing edge mechanism, eliminating the need for stretchable skin, while minimizing the energy consumption. The VCCW has been exhaustively studied prior to flight testing via bench top testing and simulations \cite{miller2015fluid} as well as wind tunnel testing \cite{zientarski2015wind} both showing the expected performance increases. 
 
 The final camber morphing project that I will highlight is NASA and Boeing's Variable Camber Continuous Trailing Edge Flap (VCCTEF). The VCCTEF bears some similarities to the AFW project in that it is using the the flaps to control the aerodynamic forces and the resultant wing shaping. This is achieved via numerous trailing edge flaps that changed the airfoil camber and are attached to each other via and elastomer filling. The flap actuation is achieved with a slow large displacement using Shape Memory Alloy (SMA) and faster electric drive motors for the outboard flap.\cite{urnes2013mission} The configuration of the actuator results in actuation constraints that much be taken into account. \cite{swei2014aeroelastic} Of the camber morphing technologies presented here the the VCCTEF project is one of the only ones that committed a significant effort to investigating the control of the aircraft\cite{nguyen2012aeroelastic} though additional validation has not been completed beyond simulations.
+
 \subsection{Flapping Flight}
+There has been a large amount of research in the area flapping flight. \cite{shyy2010recent} While the field of flapping flight field is expansive and robust we will be focusing only on the research relevant to this thesis in this section. The work relating to relevant modeling techniques are highlighted in Section \ref{sec:aeroMoldLit}. 
+
+Much of the flapping flight research has been focused on creating bio-mimetic devices to study the flight characteristics of flying animals. A group from the Department of Integrative Biology at the University of California Berkeley, has created an dynamically scaled model of a common fruit fly's wing to study the effects of different patterns of wing strokes. They were able to show that the wing twist during the stroking motion can result in rotational circulation that they theorized can be used as a means of directional control and force modulation.\cite{dickinson1999wing} In later works they were able to show that the wing twist had a significant impact on the lift force in flight, especially when the wing strokes are of small amplitudes. They also showed that the quasi-steady estimates was limited in its capability of replicating the kinematic patterns,\cite{sane2001control} while continuing to expand on the means of quasi-static simulation techniques.\cite{sane2002aerodynamic}
+
+There is on going work at AFRL into the control of flapping micro aerial vehicles. Much of the work has focused on the use of split-cycle control to achieve various maneuvers. \cite{weintraub2014implementation} Split-cycle control is at it's core using asymmetric cosine waves as show in Figure \ref{fig:splitCycle}, where the period and phase of the rising and falling edge are modulated to create asymmetric forces inducing 6 dof of control. The  work has been focused primarily on creating biomimetic hovering. \cite{doman2010wingbeat,oppenheimer2011dynamics}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\linewidth]{./Figures/splitCycle.png}
+\caption{Split-cycle example waveform}
+\label{fig:splitCycle}
+\end{figure}
+
 \subsection{Active Twist}
 
 \section{Control}
