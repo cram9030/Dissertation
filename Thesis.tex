@@ -124,6 +124,26 @@ In this work we try to take a holistic approach to the design and analysis of th
 \section{Aeroelastic Modeling}
 \label{sec:aeroMoldLit}
 
+Aeroelasticisity has been a well known and well studied problem sense shortly after the creation of planes.   To date many of the studies use some combination of an aerodynamic simulator that then couples with the mode shapes and the wing. Indeed Nguyen et. al. \cite{nguyencoupled} use an elastic wing model, a vortex lattice program (Vorview), and a geometry modeling tool coupled together to create an aeroelastic model. The elastic wing modeling utilizes twist, flapwise and chordwise bending as well as having the bending-torsion coupled included. The eventually simplify by neglecting the chordwise bending because it is noted that it is small, especially in comparison to the wing sweep angle.
+
+The aeroelastic angle of attack is defined to be the velocity of wind in the chordwise direction over the velocity in the flapwise direction. These velocities are a combination of the air speed and the elastic velocities. The forces resulting from the aeroelastic angle of attack are calculated by using the aeroelastic angle of attack and the lift and pitching moment coefficients as calculated by Vorview.
+
+The static and dynamic analysis were performed by galerkin method to separate the mode shapes for each given natural frequency. The static uses the analysis of the primary mode with no dynamics and is added to the dynamics modes. Each state equation is the result of the summation of a primary set of modes and then the states are converted into the modal coordinates are used for the calculations.
+
+In \cite{nguyen2012aeroelastic} the work from \cite{nguyencoupled} is extended. Nguyen et. al present variable camber continuous trailing edge (VCCTE) flat system to control the wing twist and wing bending in order to shape the wing. The proposed wing would be shaped into the optimal configuration for drag reduction during cruising and possibly lift enhancement during take off. The VCCTE would consist of an three component flap to dynamically shape the the mean chord of the airfoil to change the aerodynamic center location and the spanwise variation in lift.
+
+The generic transport model (GTM) was used as the basis of the rigid body model. The aeroelastic equations were derived for the wings using primarily the adjusted local angle of attack and the lift, drag, and moment coefficients associated with the instantaneous wing configuration. The beam model used was the same that was used in \cite{nguyencoupled} with the addition of bending-torsion coupling and the inclusion of cordwise bending. The GTM has jet engines attached and the affects of the thrust from the engines on the wings was also considered, as was the fact that fuel is stored in the wings resulting in the wing density, area moment of inertia, and the bending torsion constants.
+
+The rigid body mechanics an the aeroelastic equations associated with the wings were coupled via the integration of the local lift, drag and moments along the span. This was important because the frequencies of the aeroelastic and rigid body components are close and coupled. The equations of motion take the form of a time varying state space model. A observer is proposed to estimate the local angle of attack and then a LQR control was proposed to minimize the drag, states and control.
+
+With many of the same assumptions and that Nguyen et. al. work on Wang et. al presented a reduced modal approach to modeling nonlinear aeroelastic responses in flexible wings in \cite{wang2014nonlinear}. They also presented $H_{\infty}$ control for the trim from the reduced modal model. The wing was treated like a typical beam system to get the expected modes then the amplitude of the modes were used to generate that dynamics which was then reduced. The dynamic modal equation relates linearly the natural frequencies to the modal amplitudes and the interaction between the modal amplitudes as well as the external forces.
+
+The aerodynamics forces were calculated using a 2-D unsteady airfoil theory to develop lifting, drag, and moment coefficient with respect to angle of attack. The local angle of attack is generated from the proportion of vertical velocity, resulting velocity from the angular velocity and the total airspeed with the induced angle of attack subtracted. The induced angle of attack was generated with an approximation of Theodorsen's lift deficiency function.
+
+Due to the reduction scheme there can be some drift in the values that must be checked via a spanwise integration. The external force effects due to thrust, gust, and control surface input were converted to the modal coordinates to create the dynamics equation, which were used for the proposed control.
+
+Getting away from the assumed mode shapes that the previous works utilized Su proposed a strain based modeling technique for a slender flexible wing in \cite{su2014modified}. The localized strain components can be integrated to arrive at the local position and positional rate components for the finite elements. To allow for warping of the system a warping field was proposed where a finite selection of warping modes for the cross sectional area and the effects of neighboring warped cross sections are considered. Then using the virtual work concept the external and internal virtual work was combined to derive the equations of motion.
+
 \section{Morphing Wings}
 Morphing wings as a means of control is an intuitive and readily understandable means of controlling an aircraft. In our daily life we often see birds flying and their primary mechanism of motion control is changing the shape of their wings. Not surprisingly then the first attempt at roll control was done via wing warping during the Wright brothers first flight. \cite{friswell2009prospects} The use of compliant wing morphing mechanisms quickly fell out of favor it seems likely this was due to the rise of the structural shell mechanism, for which the shell of the aircraft became the primary structural component. While aircrafts still used truss structures like that found in the Wright brother's plane the weight was reduced dramatically by having the shell bare the load. \cite{weisshaar2011aerospace} It seems likely that the additional engineering effort to make the shell compliant to actuation while resisting aeroloading and the relative ease at which traditional control surfaces could be manufactured resulted in the dormancy of morphing wing research.
 
@@ -148,21 +168,79 @@ There is on going work at AFRL into the control of flapping micro aerial vehicle
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\linewidth]{./Figures/splitCycle.png}
-\caption{Split-cycle example waveform}
+\caption{Split-cycle example waveform. Figure taken from  \cite{weintraub2014implementation}.}
 \label{fig:splitCycle}
 \end{figure}
 
 \subsection{Active Twist}
 
-\section{Control}
-\subsection{Aeroelastic Control}
-\subsection{Decentralized Control}
+The research in the thesis is focused on the modeling and control of active twist aircraft making the work presented in this section of critical importance. To the authors knowledge the first known modern investigation of variable twist on a wing was performed by Ferris at NASA Langely. \cite{ferris1977wind} Ferris created an model aircraft with $35^{o}$ sweep and the ability to modulate the camber of the leading and trailing edge as well as the sectional twists. In this study the twist was implemented by having the leading edge camber morphing hinge being more swept than the trailing edge. As a result of the implementation the variable twist the affects of the twist and camber changed could not really be de-coupled and as a result only the camber was investigated.
+
+Unlike the morphing wing field in general investigation into specific active twist technology did not begin until the mid 2000's. This is likely because the flexibility that camber morphing offers over active twist. Camber also has an conceptual advantage because modern aircraft's aileron, flaps, and slats are generally intended to replicate variable camber. Keeping that in mind much of the research that was done on active twist has been part of the creation of a fully adaptable aircraft. This is the case for \cite{neal2004design} where Neal \textit{et. al.} created a fully adaptive aircraft that was able to change it's span, sweep and tip twist. While they had created an aircraft that was capable of active tip twist when they performed the wind tunnel testing they did not report any of the results from the tip twist focusing instead on the mechanisms that would have the largest most immediate affects on lift like variable span.
+
+One of the only studies of active twist technology that was actually flown was by Abdulrahim \textit{et. al.} \cite{abdulrahim2004flight}. They made two different small sized UAV's one with wing curling capabilities and one with wing twisting capabilities they flew both and compared the two aircraft performance. The aircraft wings are not of a typical NACA airfoil like design, instead they are more akin to reinforced membranes. The authors noted that it was difficult to achieve system identification of the curling aircraft due to time0varying asymmetries, limited data collection and data quality. They did not attempt to perform the molding on the wing twisting aircraft but it seems likely that the last two issues remained as well. They were able to show that the wing twist was an effective means of roll control.
+
+Of the previous active twist research the most relevant to the work presented in this thesis is the work of Majji \textit{et. al.}\cite{majji2007design} at Texas A\&M and the later work of Vos \textit{et. al.}\cite{vos2010mechanism} at Delft University of Technology. Majji \textit{et. al.} developed an redundant torque tube active twist set-up where the wing box was split into one third sections with a telescoping torque rod in attaching in four places to allow for multiple combinations of twist. The wing box and torque tube was then skinned using an elastomeric skin. They used Prandtl's lifting line theory as a means to calculated the expected lift coefficient and compare it to the wind tunnel results. They noted in the paper that there were some structural issues with the design, primarily the skin ballooned and dimpled to the point that it was necessary to compensate for those issues in the calculations. They were still able to show the ability to control the lift coefficient with each twist location with the root twist location having the largest affect.
+
+Vos \textit{et. al.}\cite{vos2010mechanism} set out to address some of the more common issues with active twist technology as were seen in \cite{majji2007design}. The basic premise was that the traditional wing box is not an effective means of inducing twist but that instead the outer shell can be viewed as a torque tube itself and the skin could be addressed by allowing the an open tube but with a control mechanism to help with the modulation of the torsional stiffness. They achieved their goal with a clever threaded rod system attached at the trailing edge of the carbon fiber reinforced skin and allowing the skin to slide freely on the ribs which could rotate freely on the spar. For modeling purposes they used both lifting line and vortex lattice code and then compared the results to wind tunnel tests. They found that the models matched the wind tunnel test relatively well especially at higher angles of attack where the lift induced drag would dominate. 
+
+%\section{Control}
+%\subsection{Aeroelastic Control}
+%\subsection{Decentralized Control}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Modeling}
+The appropriate modeling of the active twist wing is critical to further exploration on the capabilities of active twist. Due to the nature of active twist the structure becomes inherently aeroelastic. Aeroelasticity is the coupling of the aerodynamics, the rigid body dynamics of the aircraft, as well as the structural dynamics primarily of the wings. A conceptual diagram of this interaction can be seen in Figure \ref{fig:AEDiag}. The nature of aeroelasticy requires the development of both the structural modeling aspects and aerodynamic modeling with a special focus on the combination of the two.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\linewidth]{Figures/AeroelasticConceptDiagram.jpg}
+\caption{Conceptual diagram of the aeroelastic field. This figure is a recreation from \cite{hodges2011introduction}}
+\label{fig:AEDiag} 
+\end{figure}
+
 \section{Structural Modeling}
-\subsection{Galerkin Method}
-\subsection{Transfer Matrix Method}
+One of the primary components of aeroelastic modeling is the structural modeling that will be coupled with the aerodynamics. I used the Galerkin finite element method (GFEM) to model the wing. The GFEM is presented in \cite{fertis1999nonlinear} the basic approach to GFEM is to use a assumed shape that takes a basic spline and use the energetic equations to populate the mass and stiffness matrix. For a standard beam bending scenario that we will be eventually extending to a wing structure a hermite cubic spline was used resulting in the assumed shape in Equation \ref{eqn:hCube}.
+\large
+\begin{eqnarray}
+	\begin{array}{ll}
+		w(x) = f_1(x)w_i +f_2(x)\phi_i+f_2(x)w_{i+1}+f_2(x)\phi_{i+1}\\
+		f_1(x) = 1-\frac{3x^2}{l_i^2}+\frac{2x^3}{l_i^3}\\
+		f_2(x) = x-\frac{2x^2}{l_i}+\frac{x^3}{l_i^2}\\
+		f_3(x) = \frac{3x^2}{l_i^2}-\frac{2x^3}{l_i^3}\\
+		f_4(x) = \frac{-x^2}{l_i}+\frac{x^3}{l_i^2}
+	\end{array}
+\label{eqn:hCube}
+\end{eqnarray}
+\normalsize
+
+The combined use of Castigliano's theorem and Lagrange's equations of motion yield the mass, damping, and stiffness matrices, which take the general forms presented in Equation \ref{eqn:MStiff} and \ref{eqn:MMass}. 
+\begin{eqnarray}
+K_i = E_iI_i \begin{bmatrix} 
+\frac{12}{l_i^3} & \frac{6}{l_i^2}&\frac{-12}{l_i^3}&\frac{6}{l_i^2}\\ 
+\frac{6}{l_i^2}&\frac{4}{l_i}&\frac{-6}{l_i^2}&\frac{2}{l_i}\\ 
+\frac{-12}{l_i^3}&\frac{-6}{l_i^2}&\frac{12}{l_i^3}&\frac{-6}{l_i^2}\\ 
+\frac{6}{l_i^2}&\frac{2}{l_i}&\frac{-6}{l_i^2}&\frac{4}{l_i}
+\end{bmatrix}
+\label{eqn:MStiff}
+\end{eqnarray}
+\begin{eqnarray}
+M =  \frac{\rho A}{420}\begin{bmatrix} 
+156l_i & 22l_i^2&54l_i&-13l_i^2\\ 
+22l_i^2&4l_i^2&13l_i^2&-3l_i^3\\ 
+54l_i&13l_i^2&156l_i&-22l_i^2\\
+-13l_i^2&-3l_i^3&-22l_i^2&4l_i^3
+\end{bmatrix}
+\label{eqn:MMass}
+\end{eqnarray}
+
+$E_i$ is the modulus of elasticity, $l$ is the length between the states, and $I_i$ is the second area moment of inertia, all of which are for the $i_{th}$ component of a beam. The stiffness matrix is the same as the damping matrix with the modulus of elasticity replaced with the damping coefficient $\eta$.When applying these matrices to to a beam like the one shown in Figure \ref{fig:Beam} each beam section generates its own matrix which add together where the beam sections share their states.
+\begin{figure}[h]
+\centering
+\includegraphics[width=.6\linewidth]{Figures/Beam.jpg}
+\caption{Vibrating beam with states and stiffness labeled.}
+\label{fig:Beam} 
+\end{figure}
 
 \section{Aerodynamics}
 
@@ -176,6 +254,8 @@ There is on going work at AFRL into the control of flapping micro aerial vehicle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Control}
 \section{Structural Stability Control of Lattice Structure}
+\subsection{Structural Decentralized Control}
+\subsection{Transfer Matrix Method}
 
 \section{Active Twist Aircraft Control}
 
