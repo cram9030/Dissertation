@@ -494,7 +494,7 @@ where, $h$ is the depth of the plate, $E$ is the modulus of elasticity, and $\nu
 \label{fig:PatchDisp}
 \end{figure}
 
-Now that the lattic pitch size has been determined the rest of the wing design can proceed. The wing was designed and built by Benjamin Jennett details of the design can be found in \cite{jenett2016digital}. The basics of the wing design will be included here for completeness. 
+Now that the lattic pitch size has been determined the rest of the wing design can proceed. The wing was designed and built by Benjamin Jennett details of the design can be found in \cite{jenett2016digital}. The basics of the wing design will be included here for completeness. Figure \ref{fig:intStruct} shows the internal structure of wing. The cellular structures internal to the wing are created out of seven unique pieces and are formed of two primary geometries a cubic octahedron (cuboct) and a rhombic dodecahedron, also known as kelvin lattice, where the cubocts make up the rigid center with the lattice pitch determined above. The kelvin lattice makes up the trailing edge and has twice the pitch lattice that the cuboct section does allowing for the twist capabilities. The material properties for the carbon fiber reinforced polymer that the wing components were made out of can be seen in Table \ref{tab:cfrpProps}.
 
 \begin{figure}
 \hfill
@@ -506,7 +506,21 @@ Now that the lattic pitch size has been determined the rest of the wing design c
 \label{fig:intStruct}
 \end{figure}
 
-{\color{red} NOTE: ADD CONNECTION TO LATTICE PITCH AND CITE SORO PAPER}
+\begin{table}[h]
+\begin{center}
+\caption{Carbon Fiber Reinforced Polymer Properties}
+\label{tab:cfrpProps}
+\begin{tabular}{  p{4cm} p{5cm}}
+Parameter&Value\\\hline
+Layup Orientation&$0,45,90,0,-45,-90,-45,0^{o}$\\
+Sheet thickness&$0.600''+/-0.005''$\\
+Density&$1600 kg/m^{3}$\\
+Young's Modulus (E)&$25-28 Gpa$\\
+\end{tabular}
+\end{center}
+\end{table}
+
+The active twist was achieved using a servo driven torque tube with a flexural arm to gain mechanical advantage an apply the appropriate amount of torque. The servo is mounted internally to the fuselage and acts as a means of redistributing the weight of the aircraft, further details on the actuation mechanism can be found in \cite{jenett2016digital}.
 
 \section{Polystyrene Hollow Core Wing Design}
 
@@ -544,8 +558,11 @@ Figure \ref{fig:Alift} shows the lift profile for the measured airfoils, which a
 \label{fig:Alift}
 \end{figure}
 
+{\color{red} ADD ENDING CHAPTER TRANSITION}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Testing and Validation}
+{\color{red} ADD BEGINNING OF CHAPTER INTRODUCTION}
 \section{Wind Tunnel Testing}
 The wind tunnel testing was performed at the NASA Langely 12-Foot Atmospheric, closed throat, annular return wind tunnel a graphic of the wind tunnel and its relevant parameters can be seen in Figure \ref{fig:windTunnel}. Figure \ref{fig:flex} shows the active twist aircraft mounted in the wind tunnel.
 
@@ -599,6 +616,8 @@ Density&$0.01543\frac{kg}{m^3}$\\
 \end{table}  
 
 \subsubsection{Symmetric Twist}
+{\color{red} Add in section from SORO paper with Parasitic Drag inspection and Visual validation of twist}
+
 The first experiments performed in the wind tunnel were symmetric static tests with varying angles of attack, followed by symmetric flaperon deflection angles (labeled “flap” in the graphics) or tip twist in the case of the flexible models. If we look at Figure \ref{fig:CL}, we can see that there is significant of overlap between the results for each model, as would be expected due to the overall geometric similarities. It can also be seen that the “$10^o$ Flap” curve (Figure \ref{fig:CL} a) is very close to the “$6^o$ TipTwist” curve (Figure \ref{fig:CL} b), suggesting that there is a proportionality between the control effectiveness of two models.
 
 \begin{figure}[h]
@@ -731,7 +750,124 @@ the zero-crossing point would shift with changes in the air speed, which occurs 
 \end{figure}
 
 \subsection{Dynamic Wind Tunnel Results}
-{\color{red} INCLUDE DYNAMIC SIMULATION AND WIND TUNNEL TESTING RESULTS!}
+
+One of the more under explored aspects of active twist is the aerodynamic capabilities of active twist. In the earlier section of the symmetric static twist one of the reasons that the $6^o$ tip twist drag increases at a faster rate with respect to $\alpha$ than the comparable $10^o$ rigid flap is that as a control surface active twist has a much larger wetted surface area than the flap which means that it it has a larger form drag but will hit stall latter. While from a static perspective the increased wetted surface area can be an negative at increasing angles of attack there is potential to use the increased surface area as a means to enhance aerodynamic control parameters. In this section we will investigate the capabilities of symmetric active twist as a means of aeroelastic control and validate the modeling technique presented in Section \ref{sec:modeling}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/Run5454CLAeroelastic.png}
+\caption{The shape of the simulation matches well with the over all shape of the wind tunnel results. The gap between the top and the bottom is the aeroelastic contributions of the dynamic twist showing the ability to control $C_L$ with the twist rate as well as the tip twist.}
+\label{fig:CLRun5454}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/CD5454.png}
+\caption{The simulations results do not match the drag coefficient as well and instead seem to act more as a floor.}
+\label{fig:CDRun5454}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/LD5454.png}
+\caption{The simulations results do not match the drag coefficient as well and instead seem to act more as a floor.}
+\label{fig:LDRun5454}
+\end{figure}
+
+The wind tunnel testing had the tip twist oscillating in a sine pattern at a given frequency between $6^o$ and $-6^o$ tip twist and had the dynamic pressure linearly increasing from $1 psf$ to $7 psf$. To demonstrate the capabilities of the symmetric twist sine wave we will analyze a case study oscillating at $4 Hz$. The simulations were performed using the same parameter shown in Table \ref{tab:vlmConfig}. Figure \ref{fig:CLRun5454} shows that the shape of the aeroelastic simulation matches the wind tunnel results well. The gap shown between top section of the wave form and the bottom section of the wave form is the aeroelastic contributions. While the $C_L$ wave form matches well Figure \ref{fig:CDRun5454}  shows that the drag coefficient does not match very well. The wind tunnel results are much more dispersed and the aeroelastic simulation seems to be representing the floor of the wind tunnel data instead of matching its shape. Of particular interest is the lift to drag ratio because it acts as an effective evaluation of aerodynamic efficiency. Figure \ref{fig:LDRun5454} shows the lift drag ration for the wind tunnel testing and the aeroelastic simulation. The overall shape of the simulation is a decent representation of the shape of the wind tunnel data but it suffers from the same loss in magnitude that the drag coefficient exhibits.
+
+It is possible that the errors displayed in Figures \ref{fig:CLRun5454} to \ref{fig:LDRun5454} are the result of static errors from the bulky fuselage and the small aspect ratio (3) of the aircraft. To investigate the effect of the dynamic active twist the time derivative for the aforementioned parameters. Figure \ref{fig:dCLdtRun5454} shows that the aeroelastic contributions are proportionally much larger for $\frac{dC_L}{dt}$ than they were for $C_L$ in Figure \ref{fig:CLRun5454} and the simulation replicates the wind tunnel data.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/diffCL5454.png}
+\caption{The shape of the simulation continues to matches well with the over all shape of the wind tunnel results. The aeroelastic contributions are much more dominant for the lift coefficient rate.}
+\label{fig:dCLdtRun5454}
+\end{figure}
+
+While the largest qualitative difference between Figures \ref{fig:CLRun5454} and \ref{fig:dCLdtRun5454} is that shape is rounder and the aeroelastic contributions are more pounced the time derivative of the drag coefficient shows a dramatic increase in the accuracy of the simulation. Figure \ref{fig:dCDdtRun5454} shows that the simulation matched much better to the shape of the wind tunnel results, with the small exception of the lower right corner around negative six degrees. This suggests that much of the error shown in Figure \ref{fig:CDRun5454} is actually the result of static errors and that the rate of change of the drag coefficient is dominated by the induced drag.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/diffCD5454.png}
+\caption{The shape of the simulation matches well with the over all shape of the wind tunnel results, suggesting that the rate of change of the drag coefficient is largely due to induced drag}
+\label{fig:dCDdtRun5454}
+\end{figure}
+
+The rate of change of the lift drag ratio shows good matching with the wind tunnel results as well. This is important because if we were to ignore the desired lift traveling along the path that allowed the rate of change of the lift drag ratio to always be positive would result in an increase in the lift drag rations in time, the range of particular interest for this frequency and for arbitrary lift would be the region between $6^o$ and $4^o$ tip twist. While it is not realistic to ignore the lift requirements of the aircraft this concept is an important one that will be explored more later in this thesis.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/diffLD5454.png}
+\caption{As a result of the drag rate being able to be matched by the simulation the lift drag ratio rate is matched well by the simulation as well.}
+\label{fig:dLDdtRun5454}
+\end{figure}
+
+Now that we have a qualitative concept of the affect of the dynamic twist we need to develop a quantitative means of comparing the simulations to the wind tunnel data. To do this we will use the maximum and minimum envelope values as shown in Figure \ref{fig:CLEnvelope} for the lift coefficients and Figure \ref{fig:CDEnvelope} for the drag coefficients. 
+
+\begin{figure}
+\hfill
+\subfigure[Wind Tunnel Envelope]{\includegraphics[width=7cm]{Figures/CLEnvelope-01.png}}
+\hfill
+\subfigure[Aeroelastic Simulations Envelope]{\includegraphics[width=7cm]{Figures/CLSimEnvelope-01.png}}
+\hfill
+\caption{$C_L$ envelope for the wind tunnel results and the aeroelastic simulations}
+\label{fig:CLEnvelope}
+\end{figure}
+
+\begin{figure}
+\hfill
+\subfigure[Wind Tunnel Envelope]{\includegraphics[width=7cm]{Figures/CDEnvelope-01.png}}
+\hfill
+\subfigure[Aeroelastic Simulations Envelope]{\includegraphics[width=7cm]{Figures/CDSimEnvelope-01.png}}
+\hfill
+\caption{$C_D$ envelope for the wind tunnel results and the aeroelastic simulations}
+\label{fig:CDEnvelope}
+\end{figure}
+
+\begin{figure}
+\hfill
+\subfigure[Wind Tunnel Envelope]{\includegraphics[width=7cm]{Figures/CLPercentError-01.png}}
+\hfill
+\subfigure[Flexible model]{\includegraphics[width=7cm]{Figures/CDPercentError-01.png}}
+\hfill
+\caption{Lift and drag percent error for the maximum and minimum envelopes of the test run oscillating at $4 Hz$ and an angle of attack of $6^o$}
+\label{fig:PError5454}
+\end{figure}
+
+Figure \ref{fig:PError5454} shows the combined percent error of the maximum and minimum envelopes for the lift and drag coefficients. The percent error was calculated for each envelope (maximum and minimum) separately and then added together to get the cumulative envelope error. The drag coefficient error shown in Figure \ref{fig:PError5454} is actually approaching the maximum expected accuracy for drag given the vortex lattice method. The simulation method takes into account lift induced drag and then an bulk estimate of skin friction which \cite{thomas1985aircraft} states accounts for about $85\%$ of drag. There is also no clear trend line for the drag coefficient but the lift coefficient does show an downward trend in the amount of error in time. This also corresponds to the decreasing of reduced frequency into the quasi-static range. A single test run is not sufficient to make any lasting judgments on the impact of reduced frequency on the overall accuracy. Figure \ref{fig:RFreqvCLEr} shows the reduced frequency against the lift coefficient's percent error against. The colored dots are the time domain percent error, the black line if the least squares best fit while the pink section is the $95\%$ confidence interval, the blue section is the expected operation range for the aircraft. While the maximum error value for the operational area might appear alarming at first it is important to keep in context what similar methods are capable of, \cite{long2004object} use the full vortex ring method and compared it to the results from \cite{halfman1952experimental} which used a rigid NACA 0012 spanning the whole wind tunnel to approximate an infinite wing that pitched and plunged and a constant rate while the airspeed was kept constant. Long {\it et. al} got errors of four to eight percent for a similar range of testing but with a much more idealized configuration our range is easily twice that but the majority of the values are below the fit line because of the hefty punishment levied by the time domain outliers which would have been less evident in Halfman's configuration because he measured the simple amplitude without the complications of increasing airspeed. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\linewidth]{Figures/ReducedFreqvCLPError-01.png}
+\caption{The accuracy of the simulation scales with the reduced frequency}
+\label{fig:RFreqvCLEr}
+\end{figure}
+
+The ultimate goal of this simulation tool is to be able to be used as a design tool to understand trends and capabilities in a computationally efficient manner and to be able to estimate the control derivatives. To validate this linear step-wise regression was performed using NASA's System IDentification Programs for AirCraft (SIDPAC) \cite{klein2006aircraft} on both the wind tunnel data and the simulated data. The results are shown in Table \ref{tab:WTSystemID} for the most parts the estimated parameters for the simulations matched well with the wind tunnel estimates. For the control derivatives associated with lift and drag coefficients the only ones that showed large errors were very small values that are nearly zero and the $95\%$ confidence interval ranges for the values over lap meaning that there is still a possibility that the simulations value could be a representative of the wind tunnel value. The rate control derivatives have some larger errors on the non primary control derivatives (tip twist as opposed to twist rate) which seems likely to be a result of errors from the simplistic finite derivatives  taken to achieve those values.% The parameters were attempted to fit into Theodorsen's function shown below, where $\rho$ is the density of the wing, $b$ is the span, $x_f$ is the center of twist, $c$ is the cord, $U$ is airspeed, $\alpha$ is the local angle of attack, and $C$ is the reduced frequency based function stratifying the Kutta condition. The acceleration components were of such poor quality they were detrimental to include the values in the table do still fit into the Theodorsen's function and simply suggest that the tip twist and linear extrapolation from there dominates the $\dot{\alpha}$ parameter.
+
+%\begin{equation}
+%l = \rho \pi b^2(-(x_f-\frac{c}{2})\ddot{\alpha}+U\dot{\alpha})+\pi \rho U cC(U\alpha+(\frac{3c}{4}-x_f)\dot{\alpha})
+%\end{equation}
+
+\begin{table}[h]
+\begin{center}
+\caption{Wind Tunnel and Simulation System ID}
+\label{tab:WTSystemID}
+\begin{tabular}{ c|c|c|c|c}
+Parameter&Wind Tunnel Estimate&Simulation Estimate&Percent Error& Range Overlap\\\hline
+$C_{L_{\theta}}$&0.0257&0.03&$16.6\%$&True\\
+$C_{L_{\dot{\theta}}}$&$-3.16e^{-5}$&$-4.97e^{-4}$&$147\%$&True\\
+$C_{D_{\theta}}$&$2.39e^{-3}$&0.0016&$32.9\%$&True\\
+$C_{D_{\dot{\theta}}}$&$3.38e^{-6}$&$-9.79e^{-7}$&$129\%$&True\\
+$\frac{dC_{L_{\theta}}}{dt}$&$5.65e^{-5}$&0.0174&$208\%$&False\\
+$\frac{dC_{L_{\dot{\theta}}}}{dt}$&$0.027$&$0.0308$&$14.1\%$&True\\
+$\frac{dC_{D_{\theta}}}{dt}$&$-7.68e^{-5}$&$-3.82e^{-3}$&$4.87e^3\%$&False\\
+$\frac{dC_{D_{\dot{\theta}}}}{dt}$&$2.1e^{-3}$&$1.59e^{-3}$&$24.3\%$&False\\
+\end{tabular}
+\end{center}
+\end{table}  
+
 \subsubsection{Stall Mitigation}
 
 The lift data of Figure \ref{fig:CL} presents an interesting possibility to use active twist for stall mitigation at a given angle of attack. For example, at a tip twist of 10o and an angle of attack of $10^o$, the flexible model has begun to stall; however, while maintaining the angle of attack, the twist could be reduced (e.g., to 4 o or below) to avoid stall. A brief experiment was run to show that stall mitigation was actually possible, and the results compared favorably to the trends shown in Figure \ref{fig:CL}.
