@@ -74,7 +74,7 @@
 \listoftables
 
 \begin{abstract}
-The Wright Brothers marked the beginning of powered flight in 1903 using an active twist mechanism as their means of controlling roll. As time passed due to advances in other technologies that transformed aviation the active twist mechanism was no longer used. With the recent advances in material science and manufacturability, the possibility of the practical use of active twist technologies has emerged. In this theses, the advantages and disadvantages of active twist techniques are investigated through the development of an aeroelastic modeling method intended for informing the designs of such technologies and wind tunnel testing to confirm the capabilities of the active twist technologies and validate the model. Control principles for the enabling structural technologies are also proposed while the potential gains of dynamic, active twist are analyzed.
+The Wright Brothers marked the beginning of powered flight in 1903 using an active twist mechanism as their means of controlling roll. As time passed due to advances in other technologies that transformed aviation the active twist mechanism was no longer used. With the recent advances in material science and manufacturability, the possibility of the practical use of active twist technologies has emerged. In this dissertation, the advantages and disadvantages of active twist techniques are investigated through the development of an aeroelastic modeling method intended for informing the designs of such technologies and wind tunnel testing to confirm the capabilities of the active twist technologies and validate the model. Control principles for the enabling structural technologies are also proposed while the potential gains of dynamic, active twist are analyzed.
 
 \end{abstract}
 
@@ -82,7 +82,7 @@ The Wright Brothers marked the beginning of powered flight in 1903 using an acti
 \null\vfil
 {\large
 \begin{center}
-To ,\\\vspace{12pt}
+Dedicated to Val for sticking with me and supporting me while I made a terrible life choice. \\\vspace{12pt}
 
 \end{center}}
 \vfil\null
@@ -90,7 +90,15 @@ To ,\\\vspace{12pt}
 
 
 \begin{acknowledgements}
-I want to thank
+I would like to thank my committee for taking the time to read and comment on this tome. Specifically, I would like to thank my advisor Mircea Teodorescu for giving me a chance and the intellectual freedom to pursue my interest but most importantly being my friend as well. 
+
+There are many others who have helped to guide me to the completion of my Ph.D. Chief amongst those are my collaborators at NASA Ames. I need to thank individually; Sean Swei who has been an incredible mentor to me over the years and Kenneth Cheung for helping to expand my horizons. Special thanks to everyone in the Coded Structures Lab and the NASA Langley Flight Dynamics Branch 12-Foot Low-Speed Tunnel test team.
+
+I had the opportunity to work with some industry partners from Aurora Flight Science Cory Kays and Van Livieratos who gave me great insight into the process of development and provided a platform for my work.
+
+I would be remiss not to mention the members of my lab especially those who I had working with me Tyler Clinkaberry, Maryam Tebyani, and Christopher Seruge.
+
+There are many others who provided support and knowledge: Without my parents, Mike and Rebecca I would not have had this opportunity. My roommates who over the past years have become my family.
 \end{acknowledgements}
 
 \end{frontmatter}
@@ -282,12 +290,6 @@ where going forward F can be populated by the aerodynamic forces.
 \section{Aerodynamics}
 \label{sec:aeroModel}
 To generate the aerodynamic forces that we produced by the wing, we decided to use the standard vortex lattice method. The vortex lattice method (VLM) has some distinct advantages over other methods such as lifting line theory and traditional panel methods. VLM is capable of being used on any possible geometry, unlike typical lifting line theory. It also includes the interaction in the spanwise direction unlike many of the traditional panel methods. VLM is also one of the more accurate methods for simulating aerodynamic lift. \cite{bertin1998aerodynamics} The biggest disadvantage to VLM is that it does not easily lend itself to viscid calculations. Given our expected application is a mesoscale UAV the viscid effects will likely not be an issue at the operating velocities.
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{Figures/VortexLaticeMethod.jpg}
-\caption{VLM finite element horseshoe vortices with constant distances and centered about the three quarter cord line}
-\label{fig:VLM}
-\end{figure}
 
 In many ways, the dynamic twist capabilities of the active twist wing are similar to the most general movements that are seen in the flapping wing design. The unsteady vortex lattice method was chosen to model the aerodynamic effects, because of its relatively low computational cost and good accuracy when presented with changing circulations \cite{long2004object,stanford2010analytical,de2012object}. The main difference between the approach proposed here and the flapping wing research is that, while most flapping flight simulations use exclusively vortex rings which propagate through time, this work uses horseshoe vortices. 
 
@@ -301,6 +303,13 @@ The expected operating regime as shown in Figure \ref{fig:reynolds} borders on t
 \end{figure}
 
 These horseshoe vortices interactions are what creates the spanwise variation of the circulation about the wing. Figure \ref{fig:VLM} shows the set up for the VLM with the horseshoe vortices centered about the three quarter chord axis and the horizontal component of the horseshoe on the quarter chord axis. The horizontal vortex can be thought of as the circulation about the airfoil while the longitudinal vortices are the trailing vortices that satisfy Helmholtz vortex theorem requiring that a bound vortex does not change strength unless a separate vortex splits that is equal to the change in circulation. 
+
+\begin{figure}[thpb]
+\centering
+\includegraphics[width=1\linewidth]{Figures/VortexLaticeMethod.jpg}
+\caption{VLM finite element horseshoe vortices with constant distances and centered about the three quarter cord line}
+\label{fig:VLM}
+\end{figure}
 
 When comparing Figure \ref{fig:VLM} to Figure \ref{fig:CutWing} it can be seen how the VLM readily lends itself to the preexisting GFEM solid mechanics model. This was one of the reasons that the VLM was chosen to generate the aerodynamic forces, it has also already been shown to be a viable method for modeling aeroelastic effects in \cite{nguyencoupled,nguyen2012aeroelastic,nguyen2011longitudinal,nguyencoupled2014}.
 \begin{figure}[thpb]
@@ -383,7 +392,7 @@ The wing is divided into $m$ panels and calculates the aerodynamic forces/moment
 \label{fig:def}
 \end{figure}
 
-The local aeroelastic wind velocity vector at each collocation point can be given by
+The local aeroelastic wind velocity vector at each collocation point can is shown in Figure \ref{fig:def} and can be given by
 \begin{equation}
 U_{i,j} = R(\alpha_{root})\begin{bmatrix}U_{\infty} \;\; 0\end{bmatrix}^T +  R(\theta_{i})\begin{bmatrix}\dot{\theta}_{i} |d_{j}| \;\; 0\end{bmatrix}^T + \begin{bmatrix}\dot{x}_{i,j}\;\; 0\end{bmatrix}^T + \begin{bmatrix}0\;\; \dot{z}_{i,j}\end{bmatrix}^T
 \label{eqn:Uinf}
@@ -442,7 +451,7 @@ where $F = [F_{ax} \;\;F_{ay} \;\; F_{az}]^{T}$.
 \chapter{Active Twist Wing Design}
 For the development of the control of an active twist wing, it is necessary to have a platform to work from. For this purpose, we have two different active twist wings designs that were made by two different collaborators. The first active twist wing is a lattice-based design that informed wing simulations to create a holistic design process and was manufactured by collaborators at NASA Ames. The second active twist wing is a polystyrene hollow core design created by collaborators at Aurora Flight Sciences.
 
-\section{Composite Lattice-based Cellular Structure Active Twist Wing Design}
+\section{Composite Lattice-based Cellular Structure\\Active Twist Wing Design}
 
 The ability of composite lattice-based cellular structure to form complex geometries with anisotropic material properties is an enabling technology for morphing wing flight. Figure \ref{fig:plane} shows the active twist wing mounted in the wind tunnel with the actuation mechanism highlighted.
 
@@ -466,7 +475,9 @@ One of the necessary steps to doing this is to determine the size of a given pat
 In order to determine the necessary size of the patch the maximum pressure is assumed to the be the center of the patch. The pressures generated by Xfoil  within the specified patch size are summed for each pressure profile generated from independent lift coefficients within the specified patch size. Figure \ref{fig:PProfile} shows the average patch pressure with respect to angle of attach and patch size. The shape of the curve is not symmetric about the zero angle of attack because as the angle of attack is negative the induced drag changes direction. Figure \ref{fig:PatchDisp} shows the maximum displacement normalized for material and geometric constants, of a patch plotted against the patch size and angle of attack. The patch displacement was determined using the navier solution to the Kirchoff-Love plate theory assuming that the average pressure from Figure \ref{fig:PProfile} is constant across the patch. Since the wing can be assumed to be a flat plate in many situations this assumptions should be valid as well and result in equation \ref{eqn:KLPlate}.
 \small
 \begin{eqnarray}
-w(x,y)D = \sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{16P_0}{(2n-1)(2m-1)\pi^6}\left[\frac{(2m-1)^2}{a^2}+\frac{(2n-1)}{b^2}\right]^{-2}\frac{sin(2m-1)\pi x}{a}\frac{sin(2n-1)\pi y}{b}
+\begin{matrix}
+w(x,y)D = \\\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}\frac{16P_0}{(2n-1)(2m-1)\pi^6}\left[\frac{(2m-1)^2}{a^2}+\frac{(2n-1)}{b^2}\right]^{-2}\frac{sin(2m-1)\pi x}{a}\frac{sin(2n-1)\pi y}{b}
+\end{matrix}
 \label{eqn:KLPlate}
 \end{eqnarray}
 \normalsize
@@ -530,14 +541,14 @@ Our collaborators at Aurora Flight Sciences designed and built the wing in Figur
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=0.75\linewidth]{Figures/AuroraWingBenchtopTest.png}
+\includegraphics[width=0.55\linewidth]{Figures/AuroraWingBenchtopTest.png}
 \caption{Airfoil measurement benchtop testing rig}
 \label{fig:Atestrig}
 \end{figure}
 
 The benchtop testing to confirm the airfoil properties did not change with the twist was done by scanning the cross section of the wing at various twist degrees and then using XFOIL to inspect the twist aerodynamic properties. The test rig used is shown in Figure \ref{fig:Atestrig}. The laser distance sensors were placed on a C structure which was mounted on a linear stage to scan the chordwise directions while that was mounted on another stage to scan the spanwise direction. The scanning results can be seen in Figure \ref{fig:Ascan} and they show that there are minimal changes in the airfoil shape.
 
-\begin{figure}[h]
+\begin{figure}[thpb]
 \centering
 \includegraphics[width=0.75\linewidth]{Figures/AirfoilDirectMeasurements.png}
 \caption{Comparison of airfoil profile for different amounts of twist}
@@ -557,18 +568,18 @@ With the completion of the design of the active twist wings, it is important to 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Wind Tunnel Testing}
-The wind tunnel testing was performed at the NASA Langley 12-Foot Atmospheric, closed throat, annular return wind tunnel a graphic of the wind tunnel and its relevant parameters can be seen in Figure \ref{fig:windTunnel}. Figure \ref{fig:flex} shows the active twist aircraft mounted in the wind tunnel.
+The wind tunnel testing was performed at the NASA Langley 12-Foot Atmospheric, closed throat, annular return wind tunnel a graphic of the wind tunnel. Figure \ref{fig:flex} shows the active twist aircraft mounted in the wind tunnel.
+
+%\begin{figure}[thpb]
+%\centering
+%\includegraphics[width=1\linewidth]{Figures/12FootWindTunnel.png}
+%\caption{Diagram of NASA 12-Foot Wind Tunnel with relevant facts}
+%\label{fig:windTunnel}
+%\end{figure}
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/12FootWindTunnel.png}
-\caption{Diagram of NASA 12-Foot Wind Tunnel with relevant facts}
-\label{fig:windTunnel}
-\end{figure}
-
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=0.75\linewidth]{Figures/wingFlex.png}
+\includegraphics[width=0.65\linewidth]{Figures/wingFlex.png}
 \caption{Active twist wing mounted in the wind tunnel}
 \label{fig:flex}
 \end{figure}
@@ -577,7 +588,7 @@ The methodology for wind tunnel testing was to assess the performance of the fle
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=0.75\linewidth]{Figures/rigidModel.png}
+\includegraphics[width=0.7\linewidth]{Figures/rigidModel.png}
 \caption{Design parameters for rigid model. The outer mold lines in the flat actuator trim condition are identical for the control and active twist models. Displayed dimensions are in inches.}
 \label{fig:rigid}
 \end{figure}
@@ -657,6 +668,7 @@ Figure \ref{fig:CD} shows the drag curves for the flexible and rigid model types
 \label{fig:CM}
 \end{figure}
 
+Due to the configuration of the models (tailless, unswept flying wing without a reflexed camber line), it is not surprising to see Figure \ref{fig:CM} show that both models are unstable at low angles of attack. With no camber, a fuselage, and no tail, low or unstable static pitch stability is to be expected. Note that the flexible model is approaching marginal stability and the addition of a tail with minimal tail volume could easily make it stable. This also suggests that the design goal of mitigating the amount of airfoil warping was successful because the pitching moment coefficient is very similar to what we would expect for a symmetric airfoil.
 \begin{figure}[thpb]
 \hfill
 \subfigure[Rigid model]{\includegraphics[width=7cm]{Figures/WindTunnelLDCompareRigid.png}}
@@ -666,11 +678,11 @@ Figure \ref{fig:CD} shows the drag curves for the flexible and rigid model types
 \caption{Lift over Drag curves}
 \label{fig:LD}
 \end{figure}
-Due to the configuration of the models (tailless, unswept flying wing without a reflexed camber line), it is not surprising to see Figure \ref{fig:CM} show that both models are unstable at low angles of attack. With no camber, a fuselage, and no tail, low or unstable static pitch stability is to be expected. Note that the flexible model is approaching marginal stability and the addition of a tail with minimal tail volume could easily make it stable. This also suggests that the design goal of mitigating the amount of airfoil warping was successful because the pitching moment coefficient is very similar to what we would expect for a symmetric airfoil.
-
 One important part of the research was to determine the capabilities of the active twist system to improve efficiency over an extensive range of flight conditions. Figure \ref{fig:LD} shows the lift-over-drag curves for the rigid and flexible models. The maximum lift-to-drag ratio for the rigid model is slightly higher than that of the flexible models; however, the maximum lift-to-drag ratio for the rigid model comes solely from the $0^o$ Flap configuration. That is not the case for the flexible model, where most of the tested configurations reach the maximum efficiency of the no-twist configuration, and some of them exceed it. In fact, the $4^o$ Tip Twist configuration has the highest lift-to-drag ratio for the flexible model. This suggests that for particular combinations of required lift and angle of attack, the flexible model would be more efficient than the rigid model and would be uniformly more efficient if the skins were comparable.
 
 \subsubsection{Asymmetric Twist}
+In this section, we will be focusing on the ability to generate roll and yaw moments. This is achieved primarily through asymmetric flaperon deflection (labeled aileron in the graphics) for the traditional rigid model and asymmetric twist for the flexible lattice model.
+
 \begin{figure}[thpb]
 \hfill
 \subfigure[Rigid model]{\includegraphics[width=7cm]{Figures/Q2RigidRoll.png}}
@@ -681,7 +693,7 @@ One important part of the research was to determine the capabilities of the acti
 \label{fig:Q2Roll}
 \end{figure}
 
-In this section, we will be focusing on the ability to generate roll and yaw moments. This is achieved primarily through asymmetric flaperon deflection (labeled aileron in the graphics) for the traditional rigid model and asymmetric twist for the flexible lattice model.
+The rigid model was tested at various dynamic pressures, from 2 psf to 4 psf, with a sweep of the angle of attack from $−4^o$ to $24^o$ and asymmetric flaperons at $10^o$, $20^o$, and $30^o$ deflected with the left device trailing edge down and the right device trailing edge up by the same deflection angle (equal and opposite – in a direction to nominally produce a right-wing-down rolling moment).  The flexible lattice wing model was tested over the same range of dynamic pressures but over a range of angle of attack from $−4^o$ to $16^o$ with asymmetric wing twist of $2^o$, $4^o$, and $6^o$ with two exceptions:  For the dynamic pressure of 3 psf there is no 4o wing twist; for the dynamic pressure of 4 psf the angle of attack only goes up to $10^o$.  The flexible-wing deflections were also equal and opposite in the same sense as described above.  At a dynamic pressure of 2 psf, Figure \ref{fig:Q2Roll} shows the incremental rolling moment coefficient of the rigid model and the flexible lattice wing model calculated by subtracting the neutral deflection data from the deflected cases. The various twist angles result in easily distinguishable rolling moment coefficients, ranging from approximately 0.015 to 0.045, and the simulation model compares reasonably well with the wind tunnel results, particularly in the lower twist angles. Furthermore, the roll coefficient magnitude of the $6^o$ twist is comparable to the $10^o$ flaperon deflection case. This gives some proportionality to the amount of twist that would be needed to replicate the roll performance of flaperons.
 
 \begin{figure}[thpb]
 \hfill
@@ -693,7 +705,7 @@ In this section, we will be focusing on the ability to generate roll and yaw mom
 \label{fig:Q3Roll}
 \end{figure}
 
-The rigid model was tested at various dynamic pressures, from 2 psf to 4 psf, with a sweep of the angle of attack from $−4^o$ to $24^o$ and asymmetric flaperons at $10^o$, $20^o$, and $30^o$ deflected with the left device trailing edge down and the right device trailing edge up by the same deflection angle (equal and opposite – in a direction to nominally produce a right-wing-down rolling moment).  The flexible lattice wing model was tested over the same range of dynamic pressures but over a range of angle of attack from $−4^o$ to $16^o$ with asymmetric wing twist of $2^o$, $4^o$, and $6^o$ with two exceptions:  For the dynamic pressure of 3 psf there is no 4o wing twist; for the dynamic pressure of 4 psf the angle of attack only goes up to $10^o$.  The flexible-wing deflections were also equal and opposite in the same sense as described above.  At a dynamic pressure of 2 psf, Figure \ref{fig:Q2Roll} shows the incremental rolling moment coefficient of the rigid model and the flexible lattice wing model calculated by subtracting the neutral deflection data from the deflected cases. The various twist angles result in easily distinguishable rolling moment coefficients, ranging from approximately 0.015 to 0.045, and the simulation model compares reasonably well with the wind tunnel results, particularly in the lower twist angles. Furthermore, the roll coefficient magnitude of the $6^o$ twist is comparable to the $10^o$ flaperon deflection case. This gives some proportionality to the amount of twist that would be needed to replicate the roll performance of flaperons.
+Figures \ref{fig:Q2Roll}, \ref{fig:Q3Roll} and \ref{fig:Q4Roll} further indicate that the magnitude of the rolling moment coefficients for the rigid model does not change with increasing dynamic pressure, whereas for the flexible model, the rolling magnitude continues to grow and begins to converge to the simulation results. We can expect that the simulation results will act as an effective upper bound for the performance of the flexible lattice wing. This is because the VLM method does not include the fuselage, so the magnitude and the slope of the lifting line for a given wing is always optimistic which then is passed to the rolling cases when the twist is asymmetric. It is valuable to note that as the dynamic pressure increases the flexible lattice wing performs better. This means that at the same altitude but higher speeds the roll authority will be increased.
 
 \begin{figure}[thpb]
 \hfill
@@ -705,7 +717,7 @@ The rigid model was tested at various dynamic pressures, from 2 psf to 4 psf, wi
 \label{fig:Q4Roll}
 \end{figure}
 
-Figures \ref{fig:Q2Roll}, \ref{fig:Q3Roll} and \ref{fig:Q4Roll} further indicate that the magnitude of the rolling moment coefficients for the rigid model does not change with increasing dynamic pressure, whereas for the flexible model, the rolling magnitude continues to grow and begins to converge to the simulation results. We can expect that the simulation results will act as an effective upper bound for the performance of the flexible lattice wing. This is because the VLM method does not include the fuselage, so the magnitude and the slope of the lifting line for a given wing is always optimistic which then is passed to the rolling cases when the twist is asymmetric. It is valuable to note that as the dynamic pressure increases the flexible lattice wing performs better. This means that at the same altitude but higher speeds the roll authority will be increased.
+Figure \ref{fig:Q2Yaw} shows the yawing moment coefficients for the rigid model and the flexible model at a dynamic pressure of 2 psf with surfaces deflected in a similar manner as for the prior asymmetric cases. Note that while the peaks of the yawing moment coefficients are larger in magnitude for the rigid model than the flexible model over the same range of angle of attack, the yawing moment coefficient for the $10^o$ flaperon deflection is minimal in the angle of attack range of 0 to $12^o$ for the rigid model. Above this range and for the larger flaperon deflections, the results in Figure \ref{fig:Q2Yaw} are a mix of proverse and adverse moments which would complicate achieving lateral-directional control harmony with the rigid model. Note that there is a substantial difference in the magnitude and shape of the curves for the two models. The rigid model is much more jagged; on the other hand, $C_n$ of the flexible model is clearly nearly linear across the angle of attack range tested. The flexible wing exhibits adverse yawing moments arising from drag induced by the asymmetric lift levels of the left and right wings, but the levels are mild and smoothly vary the angle of attack increases.
 
 \begin{figure}[thpb]
 \hfill
@@ -717,7 +729,6 @@ Figures \ref{fig:Q2Roll}, \ref{fig:Q3Roll} and \ref{fig:Q4Roll} further indicate
 \label{fig:Q2Yaw}
 \end{figure}
 
-Figure \ref{fig:Q2Yaw} shows the yawing moment coefficients for the rigid model and the flexible model at a dynamic pressure of 2 psf with surfaces deflected in a similar manner as for the prior asymmetric cases. Note that while the peaks of the yawing moment coefficients are larger in magnitude for the rigid model than the flexible model over the same range of angle of attack, the yawing moment coefficient for the $10^o$ flaperon deflection is minimal in the angle of attack range of 0 to $12^o$ for the rigid model. Above this range and for the larger flaperon deflections, the results in Figure \ref{fig:Q2Yaw} are a mix of proverse and adverse moments which would complicate achieving lateral-directional control harmony with the rigid model. Note that there is a substantial difference in the magnitude and shape of the curves for the two models. The rigid model is much more jagged; on the other hand, $C_n$ of the flexible model is clearly nearly linear across the angle of attack range tested. The flexible wing exhibits adverse yawing moments arising from drag induced by the asymmetric lift levels of the left and right wings, but the levels are mild and smoothly vary the angle of attack increases.
 The simulation model was able to correctly predict the direction and trend for both the rolling moments and yawing moments, but it did not match the yawing moment as well as it did with the rolling moment. This is to be expected because without a tail or rudder the differential of the wing drag will be the largest contributing factor to yaw. Because VLM only calculates the lift-induced drag and excludes other sources of drag, such as the profile drag, which change with the varying angle of attack, it is expected that the slope of the simulated yawing moment coefficient curve would be lower than that for the wind-tunnel yawing moment coefficient. There is also a small negative offset in the experimental results about the simulation results. VLM only accounts for the lift-induced drag. Hence the simulation results always pass through (0,0) where the induced drag is zero. It was assumed that the offset is due to asymmetries in the installation of the flexible model or even the model itself, resulting in left-to-right differences in parasitic drag. If this were the case then 
 
 \begin{figure}[thpb]
@@ -744,9 +755,7 @@ the zero-crossing point would shift with changes in the airspeed, which occurs w
 
 \subsubsection{Parasitic Drag Inspection}
 
-One theoretical advantage of an active twist system is the potential drag reduction, but we saw in these experiments that the traditional model had lower magnitudes of drag. This was even the case for the flat configurations where there was no twist or flaps which suggest that the difference between the two is the parasitic drag. We estimated the parasitic drag as the drag at the point where there is no lift.
-
-It can be seen from Figure \ref{fig:parasitic} that the rigid model had a much lower parasitic drag coefficient than either of the flexible models, but the Flex 2 model has less parasitic drag than the Flex 1 model. The two flex models are identical in the form of their construction and geometry the primary difference was that the Flex 2 model had all of the reversible joints and attachment points glued. This did not seem to have and visual difference, but it appears it had a quantifiable difference in force response. During testing, it was clear that the Kapton strips used for the skin on the flexible models would flutter and likely resulted in ventilation. It seems likely that the skin selection is a large contributing factor in the increase of the parasitic drag.
+One theoretical advantage of an active twist system is the potential drag reduction, but we saw in these experiments that the traditional model had lower magnitudes of drag. This was even the case for the flat configurations where there was no twist or flaps which suggest that the difference between the two is the parasitic drag. The parasitic drag was estimated the point where there is no lift.
 
 \begin{figure}[thpb]
 \centering
@@ -755,7 +764,7 @@ It can be seen from Figure \ref{fig:parasitic} that the rigid model had a much l
 \label{fig:parasitic}
 \end{figure}
 
-It is likely that the skin friction has a dominate effect in the difference between the flat parasitic drag; however, when the flap is actuated, or the tip is twisted, there is a change in the form friction. We can estimate this by assuming that the skin friction is nearly the same for each configuration and looking at the difference in the parasitic drag. 
+It can be seen from Figure \ref{fig:parasitic} that the rigid model had a much lower parasitic drag coefficient than either of the flexible models, but the Flex 2 model has less parasitic drag than the Flex 1 model. The two flex models are identical in the form of their construction and geometry the primary difference was that the Flex 2 model had all of the reversible joints and attachment points glued. This did not seem to have and visual difference, but it appears it had a quantifiable difference in force response. During testing, it was clear that the Kapton strips used for the skin on the flexible models would flutter and likely resulted in ventilation. It seems likely that the skin selection is a large contributing factor in the increase of the parasitic drag.
 
 \begin{figure}[thpb]
 \centering
@@ -764,29 +773,28 @@ It is likely that the skin friction has a dominate effect in the difference betw
 \label{fig:parasiticDiff}
 \end{figure}
 
-
-Figure \ref{fig:parasiticDiff} shows the difference in the parasitic drag for the flaps and active twist. Overall the difference in parasitic drag is small for the active twist configurations, indeed, when we compare the two most similar configurations, the 6° Tip Twist and 10° Flap that the magnitude of change for the flex models are nearly half that for the flaps.
+It is likely that the skin friction has a dominate effect in the difference between the flat parasitic drag; however, when the flap is actuated, or the tip is twisted, there is a change in the form friction. This can be estimated by assuming that the skin friction is nearly the same for each configuration and looking at the difference in the parasitic drag. Figure \ref{fig:parasiticDiff} shows the difference in the parasitic drag for the flaps and active twist. Overall the difference in parasitic drag is small for the active twist configurations, indeed, when we compare the two most similar configurations, the 6° Tip Twist and 10° Flap that the magnitude of change for the flex models are nearly half that for the flaps.
 
 \subsection{Dynamic Wind Tunnel Results}
 \label{sec:DWTR}
-
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{Figures/TwistTimeLapse-01.png}
-\caption{Time lapse of the right wing during dynamic twist experiments}
-\label{fig:timelapse}
-\end{figure}
 
 One of the more under-explored aspects of active twist is the aerodynamic capabilities of active twist. In the earlier section of the symmetric static twist one of the reasons that the $6^o$ tip twist drag increases at a faster rate with respect to $\alpha$ than the comparable $10^o$ rigid flap is that as a control surface active twist has a much larger wetted surface area than the flap which means that it has more substantial form drag but will hit stall latter. While from a static perspective the increased wetted surface area can be negative at increasing angles of attack there is potential to use the increased surface area as a means to enhance aerodynamic control parameters. In this section, we will investigate the capabilities of a symmetric active twist as a means of aeroelastic control and validate the modeling technique presented in Section \ref{sec:modeling}.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=.75\linewidth]{Figures/Run5454CLAeroelastic.png}
+\includegraphics[width=0.9\linewidth]{Figures/TwistTimeLapse-01.png}
+\caption{Time lapse of the right wing during dynamic twist experiments}
+\label{fig:timelapse}
+\end{figure}
+
+The wind tunnel testing had the tip twist oscillating in a sine pattern at a given frequency between $6^o$ and $-6^o$ tip twist and had the dynamic pressure linearly increasing from $1 psf$ to $7 psf$. Figure \ref{fig:timelapse} shows a timelapse of the right wing during the dynamic wind tunnel testing. To demonstrate the capabilities of the symmetric twist sine wave, we will analyze a case study oscillating at $4 Hz$. The simulations were performed using the same parameter shown in Table \ref{tab:vlmConfig}. Figure \ref{fig:CLRun5454} indicates that the shape of the aeroelastic simulation matches the wind tunnel results well. The gap shown between top section of the waveform and the bottom part of the waveform is the aeroelastic contributions. 
+\begin{figure}[thpb]
+\centering
+\includegraphics[width=.7\linewidth]{Figures/Run5454CLAeroelastic.png}
 \caption{The shape of the simulation matches well with the over all shape of the wind tunnel results. The gap between the top and the bottom is the aeroelastic contributions of the dynamic twist showing the ability to control $C_L$ with the twist rate as well as the tip twist.}
 \label{fig:CLRun5454}
 \end{figure}
-
-The wind tunnel testing had the tip twist oscillating in a sine pattern at a given frequency between $6^o$ and $-6^o$ tip twist and had the dynamic pressure linearly increasing from $1 psf$ to $7 psf$. Figure \ref{fig:timelapse} shows a timelapse of the right wing during the dynamic wind tunnel testing. To demonstrate the capabilities of the symmetric twist sine wave, we will analyze a case study oscillating at $4 Hz$. The simulations were performed using the same parameter shown in Table \ref{tab:vlmConfig}. Figure \ref{fig:CLRun5454} indicates that the shape of the aeroelastic simulation matches the wind tunnel results well. The gap shown between top section of the waveform and the bottom part of the waveform is the aeroelastic contributions. While the $C_L$ waveform matches well Figure \ref{fig:CDRun5454}  shows that the drag coefficient does not match very well. The wind tunnel results are much more dispersed, and the aeroelastic simulation seems to be representing the floor of the wind tunnel data instead of matching its shape. Of particular interest is the lift to drag ratio because it acts as an efficient evaluation of aerodynamic efficiency. Figure \ref{fig:LDRun5454} shows the lift-drag ratio for the wind tunnel testing and the aeroelastic simulation. The overall shape of the simulation is a decent representation of the form of the wind tunnel data, but it suffers from the same loss in magnitude that the drag coefficient exhibits.
+While the $C_L$ waveform matches well Figure \ref{fig:CDRun5454}  shows that the drag coefficient does not match very well. The wind tunnel results are much more dispersed, and the aeroelastic simulation seems to be representing the floor of the wind tunnel data instead of matching its shape. Of particular interest is the lift to drag ratio because it acts as an efficient evaluation of aerodynamic efficiency. 
 
 \begin{figure}[thpb]
 \centering
@@ -794,6 +802,8 @@ The wind tunnel testing had the tip twist oscillating in a sine pattern at a giv
 \caption{The simulations results do not match the drag coefficient as well and instead seem to act more as a floor.}
 \label{fig:CDRun5454}
 \end{figure}
+
+Figure \ref{fig:LDRun5454} shows the lift-drag ratio for the wind tunnel testing and the aeroelastic simulation. The overall shape of the simulation is a decent representation of the form of the wind tunnel data, but it suffers from the same loss in magnitude that the drag coefficient exhibits.
 
 \begin{figure}[thpb]
 \centering
@@ -820,7 +830,7 @@ While the most significant qualitative difference between Figures \ref{fig:CLRun
 \label{fig:dCDdtRun5454}
 \end{figure}
 
-The rate of change of the lift-drag ratio shows good matching with the wind tunnel results as well. This is important because if we were to ignore the desired lift traveling along the path that allowed the rate of change of the lift-drag ratio always to be positive would result in an increase in the lift-drag ratios in time, the range of particular interest for this frequency and arbitrary lift would be the region between $6^o$ and $4^o$ tip twist. While it is not realistic to ignore the lift requirements of the aircraft this concept is an important one that will be explored more later in this thesis.
+The rate of change of the lift-drag ratio in Figure \ref{fig:dLDdtRun5454} shows good matching with the wind tunnel results as well. 
 
 \begin{figure}[thpb]
 \centering
@@ -829,7 +839,7 @@ The rate of change of the lift-drag ratio shows good matching with the wind tunn
 \label{fig:dLDdtRun5454}
 \end{figure}
 
-Now that we have a qualitative idea of the effect of the dynamic twist we need to develop a quantitative means of comparing the simulations to the wind tunnel data. To do this, we will use the maximum and minimum envelope values as shown in Figure \ref{fig:CLEnvelope} for the lift coefficients and Figure \ref{fig:CDEnvelope} for the drag coefficients. 
+This is important because if we were to ignore the desired lift traveling along the path that allowed the rate of change of the lift-drag ratio always to be positive would result in an increase in the lift-drag ratios in time, the range of particular interest for this frequency and arbitrary lift would be the region between $6^o$ and $4^o$ tip twist. While it is not realistic to ignore the lift requirements of the aircraft this concept is an important one that will be explored more later in this thesis.
 
 \begin{figure}[thpb]
 \hfill
@@ -841,7 +851,7 @@ Now that we have a qualitative idea of the effect of the dynamic twist we need t
 \label{fig:CLEnvelope}
 \end{figure}
 
-Figure \ref{fig:PError5454} shows the combined percent error of the maximum and minimum envelopes for the lift and drag coefficients. The percent error was calculated for each envelope (maximum and minimum) separately and then added together to get the cumulative envelope error. The drag coefficient error is shown in Figure \ref{fig:PError5454} is approaching the maximum expected accuracy for drag given the vortex lattice method. The simulation method takes into account lift-induced drag and then a bulk estimate of skin friction which \cite{thomas1985aircraft} states accounts for about $85\%$ of drag. There is also no clear trend line for the drag coefficient, but the lift coefficient does show a downward trend of error in time. This also corresponds to the decreasing of reduced frequency into the quasi-static range. A single test run is not sufficient to make any lasting judgments on the impact of reduced frequency on the overall accuracy. Figure \ref{fig:RFreqvCLEr} shows the reduced frequency against the lift coefficient's percent error against. The colored dots are the time domain percent error, the black line if the least squares best fit while the pink section is the $95\%$ confidence interval, the blue part is the expected operation range for the aircraft. While the maximum error value for the operational area might appear alarming at first, it is important to keep in context that $45\%$ of the data points were had less than $15\%$ error in the operational range and a majority of the values that did not come from a single test run. Similar methods such as the one \cite{long2004object} used, which was a full vortex ring method and that they compared to results from \cite{halfman1952experimental} which used a rigid NACA 0012 spanning the whole wind tunnel to approximate an infinite wing that pitched and plunged and a constant rate while the airspeed was kept constant. Long {\it et. al} got errors of four to eight percent for a similar range of testing but with a much more idealized configuration our range is easily twice that, but the majority of the values are below the fit line because of the hefty punishment levied by the time domain outliers which would have been less evident in Halfman's configuration because he measured the simple amplitude without the complications of increasing airspeed. At the time of wind tunnel testing, it was decided to do the testing by sweeping the airspeed due to time constraints and a desire to explore the aeroelastic coupling at the largest amount of airspeed values.
+Now that we have a qualitative idea of the effect of the dynamic twist we need to develop a quantitative means of comparing the simulations to the wind tunnel data. To do this, we will use the maximum and minimum envelope values as shown in Figure \ref{fig:CLEnvelope} for the lift coefficients and Figure \ref{fig:CDEnvelope} for the drag coefficients. 
 
 \begin{figure}[thpb]
 \hfill
@@ -853,6 +863,8 @@ Figure \ref{fig:PError5454} shows the combined percent error of the maximum and 
 \label{fig:CDEnvelope}
 \end{figure}
 
+Figure \ref{fig:PError5454} shows the combined percent error of the maximum and minimum envelopes for the lift and drag coefficients. The percent error was calculated for each envelope (maximum and minimum) separately and then added together to get the cumulative envelope error. The drag coefficient error is shown in Figure \ref{fig:PError5454} is approaching the maximum expected accuracy for drag given the vortex lattice method. The simulation method takes into account lift-induced drag and then a bulk estimate of skin friction which \cite{thomas1985aircraft} states accounts for about $85\%$ of drag. There is also no clear trend line for the drag coefficient, but the lift coefficient does show a downward trend of error in time. This also corresponds to the decreasing of reduced frequency into the quasi-static range. A single test run is not sufficient to make any lasting judgments on the impact of reduced frequency on the overall accuracy. 
+
 \begin{figure}[thpb]
 \hfill
 \subfigure[Wind Tunnel Envelope]{\includegraphics[width=7cm]{Figures/CLPercentError-01.png}}
@@ -863,26 +875,22 @@ Figure \ref{fig:PError5454} shows the combined percent error of the maximum and 
 \label{fig:PError5454}
 \end{figure}
 
+Figure \ref{fig:RFreqvCLEr} shows the reduced frequency against the lift coefficient's percent error against. The colored dots are the time domain percent error, the black line if the least squares best fit while the pink section is the $95\%$ confidence interval, the blue part is the expected operation range for the aircraft. While the maximum error value for the operational area might appear alarming at first, it is important to keep in context that $45\%$ of the data points were had less than $15\%$ error in the operational range and a majority of the values that did not come from a single test run. 
 \begin{figure}[thpb]
 \centering
 \includegraphics[width=.75\linewidth]{Figures/ReducedFreqvCLPError-01.png}
 \caption{The accuracy of the simulation scales with the reduced frequency}
 \label{fig:RFreqvCLEr}
 \end{figure}
-
-The ultimate goal of this simulation tool is to be able to be used as a design tool to understand trends and capabilities in a computationally efficient manner and to be able to estimate the control derivatives. To validate this linear step-wise regression was performed using NASA's System IDentification Programs for AirCraft (SIDPAC) \cite{klein2006aircraft} on both the wind tunnel data and the simulated data. The results are shown in Table \ref{tab:WTSystemID} for the most parts the estimated parameters for the simulations matched well with the wind tunnel estimates. For the control derivatives associated with lift and drag coefficients, the only ones that showed significant errors were very small values that are nearly zero and the $95\%$ confidence interval ranges for the values overlap meaning that there is still a possibility that the simulations value could be a representative of the wind tunnel value. The rate control derivatives have some larger errors on the nonprimary control derivatives (tip twist as opposed to twisting rate) which seems likely to be a result of errors from the simple finite derivatives taken to achieve those values.
-% The parameters were attempted to fit into Theodorsen's function shown below, where $\rho$ is the density of the wing, $b$ is the span, $x_f$ is the center of twist, $c$ is the cord, $U$ is airspeed, $\alpha$ is the local angle of attack, and $C$ is the reduced frequency based function stratifying the Kutta condition. The acceleration components were of such poor quality they were detrimental to include the values in the table do still fit into the Theodorsen's function and simply suggest that the tip twist and linear extrapolation from there dominates the $\dot{\alpha}$ parameter.
-
-%\begin{equation}
-%l = \rho \pi b^2(-(x_f-\frac{c}{2})\ddot{\alpha}+U\dot{\alpha})+\pi \rho U cC(U\alpha+(\frac{3c}{4}-x_f)\dot{\alpha})
-%\end{equation}
+Similar methods such as the one \cite{long2004object} used, which was a full vortex ring method and that they compared to results from \cite{halfman1952experimental} which used a rigid NACA 0012 spanning the whole wind tunnel to approximate an infinite wing that pitched and plunged and a constant rate while the airspeed was kept constant. Long {\it et. al} got errors of four to eight percent for a similar range of testing but with a much more idealized configuration our range is easily twice that, but the majority of the values are below the fit line because of the hefty punishment levied by the time domain outliers which would have been less evident in Halfman's configuration because he measured the simple amplitude without the complications of increasing airspeed. At the time of wind tunnel testing, it was decided to do the testing by sweeping the airspeed due to time constraints and a desire to explore the aeroelastic coupling at the largest amount of airspeed values.
 
 \begin{table}[h]
 \begin{center}
 \caption{Wind Tunnel and Simulation System ID}
 \label{tab:WTSystemID}
 \begin{tabular}{ c|c|c|c|c}
-Parameter&Wind Tunnel Estimate&Simulation Estimate&Percent Error& Range Overlap\\\hline
+&Wind Tunnel&Simulation&Percent&Range\\
+Parameter&Estimate&Estimate&Error& Overlap\\\hline
 $C_{L_{\theta}}$&0.0257&0.03&$16.6\%$&True\\
 $C_{L_{\dot{\theta}}}$&$-3.16e^{-5}$&$-4.97e^{-4}$&$147\%$&True\\
 $C_{D_{\theta}}$&$2.39e^{-3}$&0.0016&$32.9\%$&True\\
@@ -895,7 +903,16 @@ $\frac{dC_{D_{\dot{\theta}}}}{dt}$&$2.1e^{-3}$&$1.59e^{-3}$&$24.3\%$&False\\
 \end{center}
 \end{table}  
 
+The ultimate goal of this simulation tool is to be able to be used as a design tool to understand trends and capabilities in a computationally efficient manner and to be able to estimate the control derivatives. To validate this linear step-wise regression was performed using NASA's System IDentification Programs for AirCraft (SIDPAC) \cite{klein2006aircraft} on both the wind tunnel data and the simulated data. The results are shown in Table \ref{tab:WTSystemID} for the most parts the estimated parameters for the simulations matched well with the wind tunnel estimates. For the control derivatives associated with lift and drag coefficients, the only ones that showed significant errors were very small values that are nearly zero and the $95\%$ confidence interval ranges for the values overlap meaning that there is still a possibility that the simulations value could be a representative of the wind tunnel value. The rate control derivatives have some larger errors on the nonprimary control derivatives (tip twist as opposed to twisting rate) which seems likely to be a result of errors from the simple finite derivatives taken to achieve those values.
+% The parameters were attempted to fit into Theodorsen's function shown below, where $\rho$ is the density of the wing, $b$ is the span, $x_f$ is the center of twist, $c$ is the cord, $U$ is airspeed, $\alpha$ is the local angle of attack, and $C$ is the reduced frequency based function stratifying the Kutta condition. The acceleration components were of such poor quality they were detrimental to include the values in the table do still fit into the Theodorsen's function and simply suggest that the tip twist and linear extrapolation from there dominates the $\dot{\alpha}$ parameter.
+
+%\begin{equation}
+%l = \rho \pi b^2(-(x_f-\frac{c}{2})\ddot{\alpha}+U\dot{\alpha})+\pi \rho U cC(U\alpha+(\frac{3c}{4}-x_f)\dot{\alpha})
+%\end{equation}
+
 \subsubsection{Stall Mitigation}
+
+The lift data of Figure \ref{fig:CL} presents an intriguing possibility to use active twist for stall mitigation at a given angle of attack. For example, at a tip twist of 10o and an angle of attack of $10^o$, the flexible model has begun to stall; however, while maintaining the angle of attack, the twist could be reduced (e.g., to 4 o or below) to avoid stall. A brief experiment was run to show that stall mitigation was possible, and the results compared favorably to the trends shown in Figure \ref{fig:CL}.
 
 \begin{figure}[thpb]
 \centering
@@ -904,7 +921,6 @@ $\frac{dC_{D_{\dot{\theta}}}}{dt}$&$2.1e^{-3}$&$1.59e^{-3}$&$24.3\%$&False\\
 \label{fig:SM}
 \end{figure}
 
-The lift data of Figure \ref{fig:CL} presents an intriguing possibility to use active twist for stall mitigation at a given angle of attack. For example, at a tip twist of 10o and an angle of attack of $10^o$, the flexible model has begun to stall; however, while maintaining the angle of attack, the twist could be reduced (e.g., to 4 o or below) to avoid stall. A brief experiment was run to show that stall mitigation was possible, and the results compared favorably to the trends shown in Figure \ref{fig:CL}.
 To test the active twist capability of stall mitigation, we started at given angle of attack and a tip twist of $10^o$. Twist was then reduced by $2^o$ and maintained at the new value for ten seconds. Figure 16 shows the results of the stall mitigation tests compared to the expected values. We can see that for all the angles of attack other than $14^o$, we were able to mitigate the stall effects by varying the twist. In fact, in these cases, we were able to observe stall-induced trailing edge flutter of the wing skin, and the trailing edge flutter for the $10^o$ angle of attack visually stopped at $6^o$ of twist, confirming what the data indicate in Figure \ref{fig:SM}. It is also interesting to note that the lift coefficients from the stall mitigation tests were consistently 0.5 higher than the expected values. Of course, more runs would be needed to show that changing twist to alleviate stall would result in a higher lift coefficient, but it is interesting nonetheless.
 
 
@@ -979,12 +995,14 @@ The equations of motion for the assembled wing structure is obtained using the l
 \label{eqn:smdSys}
 \end{equation}
 where $\eta (t)$, $\dot{\eta} (t)$, and $\ddot{\eta} (t)$ denote respectively the displacement, velocity and accelration of the voxels, $u (t)$ represents the active voxels whose locations are indicated in $\mathcal{B}$, $w (t)$ denotes the disturbance inputs, with intensity $W >0$, applied to the voxel structure. It is assumed that there is a total of $n$ voxels, among them $m$ active voxels. The structural matrices $(\mathcal{M}, \mathcal{C}, \mathcal{K})$ have dimensions $n \times n$ and can be defined as
+\footnotesize
 \begin{equation}
 \begin{bmatrix}m&0&0&0&\dots&0\\0&m&0&0&\dots&0\\0&0&m&0&\dots&0\\\vdots&\vdots&\vdots&\vdots&\ddots&\vdots \\0&0&0&0&\dots&m\end{bmatrix} \,,\;
 \begin{bmatrix}2c&-c&0&0&\dots&0\\-c&2c&- c&0&\dots&0\\0&-c&2c&-c&\dots&0\\ \vdots&\vdots&\vdots&\vdots&\ddots&\vdots \\0&0&0&0&\dots&c\end{bmatrix} \,,\;
 \begin{bmatrix}2k&-k&0&0&\dots&0\\-k&2k&-k&0&\dots&0\\0&-k&2k&-k&\dots&0\\ \vdots&\vdots&\vdots&\vdots&\ddots&\vdots \\0&0&0&0&\dots&k\end{bmatrix} \,.
 \label{eqn:EOS}
 \end{equation}
+\normalsize
 Then, Equation (\ref{eqn:smdSys}) can be rewritten in the state-space representation as follows,
 
 \begin{equation}
@@ -1001,7 +1019,7 @@ We assume the actuator dynamics can be described by
 \begin{equation}    \label{act1}
 \dot{u}_i (t) = a_i u_i (t) + b_i v_i (t) \,,\;\; i = 1,2,\dots, m \,,
 \end{equation}
-where $(a_i , b_i)$ are known, $[v_1 \,\, v_2 \, \cdots \, v_m]^{t} = v$ are the commanded inputs, and $[u_1 \,\, u_2 \, \cdots \, u_m]^{t} = u$. Then, (\ref{act1}) can be expressed in a compact matrix form as
+where $(a_i , b_i)$ are known, $[v_1 \,\, v_2 \, \cdots \, v_m]^{t} = v$ are the commanded inputs, and \\$[u_1 \,\, u_2 \, \cdots \, u_m]^{t} = u$. Then, (\ref{act1}) can be expressed in a compact matrix form as
 \begin{equation}    \label{act2}
 \dot{u} (t) = A_u u(t) + B_u v(t) \,,
 \end{equation}
@@ -1171,6 +1189,11 @@ An important part of the formulation of the decentralized structural control mod
 
 The simulation is set up to have the wing be rigidly attached to the base forming a cantilevered beam where a representative gust load it applied. It is assumed that the wing is in a statically deformed configuration and that the gust will take the form of a variation in wind speed. The gust shape is a normal distribution centered $40m$ from the wing root with a maximum value of $2.3 \frac{m}{s}$ and a standard deviation of $10m$. It is assumed that the gust is a normal distribution in the time domain and is centered at $2s$ with a standard deviation of $1s$. The variation in wind speed is translated to loading by assuming the aircraft is at cruise conditions and calculating that the lift coefficient would need to be $.270$ to maintain altitude considering only the weight of the voxels. Assuming just the weight of the voxels is not a perfect assumption but it does allow for and an estimate of the lifting coefficient. 
 
+\subsection{Simulation Results}
+\label{sec:results}
+
+The decentralized controllers were simulated with the structure proposed in Section \ref{sec:struct} with 25, 40, and 50 active voxels. We used the approach suggested by SeDuMi and YALMIP \cite{lofberg2004yalmip} to solve the LMIs presented in Section \ref{sec:LMI}. The same weighting matrices were used for all of the simulations to try and make them as comparable as possible. This can be done without fear of stability issues because the off-diagonal components for each model are identical therefore the selected Q that meets the stability requirement for a single case applies to all of them. The simulations were run for 200 seconds using MATLAB's ODE45 solver with commanded time steps of $100ms$.
+
 \begin{figure}[thpb]
 \centering
 \includegraphics[width=0.75\linewidth]{Figures/LMIUncontrolDisplacement.png}
@@ -1178,33 +1201,32 @@ The simulation is set up to have the wing be rigidly attached to the base formin
 \label{fig:UCPos}
 \end{figure}
 
-\subsection{Simulation Results}
-\label{sec:results}
 \begin{figure}[thpb]
 \centering
 \includegraphics[width=0.75\linewidth]{Figures/LMIUncontrolVelocity.png}
 \caption{The uncontrolled velocity shows that the waveforms on the outer half of the wingspan behave differently with a larger secondary mode shape than the wing root half of the wing.}
 \label{fig:UCVel}
 \end{figure}
-The decentralized controllers were simulated with the structure proposed in Section \ref{sec:struct} with 25, 40, and 50 active voxels. We used the approach suggested by SeDuMi and YALMIP \cite{lofberg2004yalmip} to solve the LMIs presented in Section \ref{sec:LMI}. The same weighting matrices were used for all of the simulations to try and make them as comparable as possible. This can be done without fear of stability issues because the off-diagonal components for each model are identical therefore the selected Q that meets the stability requirement for a single case applies to all of them. The simulations were run for 200 seconds using MATLAB's ODE45 solver with commanded time steps of $100ms$.
-
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=0.9\linewidth]{Figures/LMIControl.png}
-\caption{The control forces are larger towards the center of the wing. The control forces towards the tip are delayed in the time domain compared to the ones toward the root.}
-\label{fig:control}
-\end{figure}
 
 From Figure \ref{fig:UCPos} it can be seen that the disturbance excites the wing causing a primary mode to be dominant though at least early in the simulation the voxels at the tip have a time delay compared to the ones towards the root. At the same time Figure, \ref{fig:UCVel} shows the velocity of the uncontrolled simulation and demonstrates the secondary modes that are evident in the tipward voxels.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=0.9\linewidth]{Figures/LMIMaxVoxelComparison.png}
+\includegraphics[width=0.75\linewidth]{Figures/LMIControl.png}
+\caption{The control forces are larger towards the center of the wing. The control forces towards the tip are delayed in the time domain compared to the ones toward the root.}
+\label{fig:control}
+\end{figure}
+
+As a reference, a 40 active voxel case study of the controlled simulation control forces is shown. Figure \ref{fig:control} indicates that the force profile follows the waveform of the voxel position heavily. Much like the position values the control forces act differently depending on if they are closer to the tip or the root. It should be noted that the magnitude of the forces applied is very small because the controllers are focused on only aiding the wing in removing energy over time. Figure \ref{fig:maxVoxel} shows the comparison of the voxel with the largest displacement for all the of configurations studied here. The $50$ active voxel configuration shows an increase in the frequency and the most significant reduction in the magnitude of the voxel displacement.
+
+\begin{figure}[thpb]
+\centering
+\includegraphics[width=0.75\linewidth]{Figures/LMIMaxVoxelComparison.png}
 \caption{Comparision of the maximum displaced voxel for each number of active voxels}
 \label{fig:maxVoxel}
 \end{figure}
 
-As a reference, a 40 active voxel case study of the controlled simulation control forces is shown. Figure \ref{fig:control} indicates that the force profile follows the waveform of the voxel position heavily. Much like the position values the control forces act differently depending on if they are closer to the tip or the root. It should be noted that the magnitude of the forces applied is very small because the controllers are focused on only aiding the wing in removing energy over time. Figure \ref{fig:maxVoxel} shows the comparison of the voxel with the largest displacement for all the of configurations studied here. The $50$ active voxel configuration shows an increase in the frequency and the most significant reduction in the magnitude of the voxel displacement.
+From Table \ref{tab:energy} we can see that all of the controllers do a good job of limiting vibrations and removing energy from the system. As would be expected the more active voxels that are added to the system the more energy is removed from the system. The relationship is not a linear one though the addition of 15 voxels to go to 40 from 25 active voxels only removed an additional $5.5e^3 Js$ of energy while the additional ten voxels from 40 to 50 active voxels resulted in a reduction of $30.4 Js$. This is also shown in Table \ref{tab:energy} with the energy removed per voxel column where the largest amount of energy removed per voxel is the 25 active voxel configuration followed by the 50 active voxel configuration. This suggests that there is a significant influence from the configuration as well as the number of active voxels.
 
 \begin{table}[thpb]
 \caption{Controller Performance Metrics}
@@ -1228,8 +1250,6 @@ Active Voxels&Energy (Js)&Energy (Js)&Force (Ns)& per Voxel (J)\\
 \end{center}
 \end{table}
 
-From Table \ref{tab:energy} we can see that all of the controllers do a good job of limiting vibrations and removing energy from the system. As would be expected the more active voxels that are added to the system the more energy is removed from the system. The relationship is not a linear one though the addition of 15 voxels to go to 40 from 25 active voxels only removed an additional $5.5e^3 Js$ of energy while the additional ten voxels from 40 to 50 active voxels resulted in a reduction of $30.4 Js$. This is also shown in Table \ref{tab:energy} with the energy removed per voxel column where the largest amount of energy removed per voxel is the 25 active voxel configuration followed by the 50 active voxel configuration. This suggests that there is a significant influence from the configuration as well as the number of active voxels.
-
 \section{Decentralize Transfer Matrix Method Control}
 As was mentioned in Section \ref{sec:decentral} one of the primary issues with the lattice based structures is the dimensionality. One approach is the one we took in Section \ref{sec:decentral} where the key is transforming the preexisting model into a more manageable sized component another is to create an control centered model to do this the extended discrete-time transfer matrix method (E-DT-TMM) is proposed to model and analyze large dynamical aerostructures. The basic idea behind this approach was inspired by the work of Tan {\it et al.} \cite{tan1990modified}, where the notion of modified transfer matrix method (M-TMM) approach was developed in continuous-time, based mainly on the dynamic stiffness matrix of a finite element \cite{degen1985combined}, where the elemental mass and stiffness matrices are symmetric and positive semi-definite. By applying recursively the elemental transfer method that relates two adjacent elements, a reduced order model can be obtained. The primary goal there was to reduce the computational efforts involved in structural analysis and controls for flexible space structures. In addition to incorporating the notion of M-TMM, we also utilize the numerical integration approach, known as the discrete-time transfer matrix method (DT-TMM), proposed by Kumar and Sankar \cite{kumar1986new}, in which a series of mass-spring-damper models were used. The focus there was on developing numerically tractable algorithms to perform structural analysis.
 
@@ -1247,6 +1267,13 @@ Some previous research have used the DT-TMM as a means of controlling the flexib
 \subsection{A Discrete-Time Reduced-Order Model}
 \label{sec:DTTMM}
 
+Figure \ref{fig:lumpwing} shows a section of aircraft wing built by utilizing the lattice-based cellular structure concept. The composition of this discrete construction renders itself naturally to lumped-mass system setup. Each rib of the wing provides a logical location for a lumped mass, and the connecting components between each airfoil can be modeled as spring and damper. In this section, we introduce the concept of E-DT-TMM and apply it to attain the reduced-order structural model that is best suited for control synthesis. Specifically, we model the half-span wing section connected to the fuselage as a clamp-free structure. 
+
+Before proceeding, we provide a brief overview of DT-TMM concept developed by Kumar and Sankar \cite{kumar1986new}.   
+
+\subsection{Overview of DT-TMM}
+\label{dt-tmm}
+
 \begin{figure}[thpb]
 \centering
 \includegraphics[width=1\linewidth]{Figures/full_mass_n.png}
@@ -1254,17 +1281,12 @@ Some previous research have used the DT-TMM as a means of controlling the flexib
 \label{fig:gen}
 \end{figure}
 
-Figure \ref{fig:lumpwing} shows a section of aircraft wing built by utilizing the lattice-based cellular structure concept. The composition of this discrete construction renders itself naturally to lumped-mass system setup. Each rib of the wing provides a logical location for a lumped mass, and the connecting components between each airfoil can be modeled as spring and damper. In this section, we introduce the concept of E-DT-TMM and apply it to attain the reduced-order structural model that is best suited for control synthesis. Specifically, we model the half-span wing section connected to the fuselage as a clamp-free structure. 
-
-Before proceeding, we provide a brief overview of DT-TMM concept developed by Kumar and Sankar \cite{kumar1986new}.   
-
-\subsection{Overview of DT-TMM}
-\label{dt-tmm}
 Figure \ref{fig:gen} shows a sequence of lumped masses which are interconnected by stiffness and damping components modeled by spring and damper. The discrete-time equation of motion for a given subsystem $n$ centered at mass $m_n$ at time step $t_i$ can be described by \cite{kumar1986new}
 
 \beq \label{eqn:nEOM}
 m_n \ddot{x}_n (t_i)=\tau^R_n(t_i)-\tau^L_n(t_i)+f_n(t_i)
 \eeq
+
 where $\ddot{x}_n$ denotes the acceleration of mass $m_n$, $\tau^{R}_{n}$ and $\tau^{L}_{n}$ the forces from right and left side of mass $m_n$, and $f_n$ the control force applied to mass $m_n$. Furthermore, $\tau^{L}_{n}$ can be derived from the free-body diagram in Figure \ref{fig:gen} and is described by
 \beq
 \tau_n^L = k_n \left[x_n(t_i)-x_{n-1}(t_i)\right]+c_n \left[\dot{x}_n(t_i)-\dot{x}_{n-1}(t_i) \right]
@@ -1419,6 +1441,13 @@ m_n \left [ A_n x_n+ B_n \right ] = \tau_n^R-\tau_n^L +f_n
 \eeq
 The first equation relates the propagation from the left side of mass $m_n$, the second equation from the right side, and then the last equation relates both ends of $m_n$. Given the boundary conditions at both edges, the state vectors $v_n^R$ and $v_n^L$ at subsystem $n$ and at time step $t_i$ can be solved from (\ref{eqn:leftRight}), which apparently is a reduced-order system. The state vectors at other subsystems at time $t_i$ can be derived recursively by propagating $v_n^R$ and $v_n^L$ as the right and left boundary conditions in Eqs. (\ref{eqn:propRight}) and (\ref{eqn:propLeft}), respectively, as illustrated in Figure \ref{left_2_right}. The velocity and acceleration at mass $m_n$ can then be calculated using (\ref{eqn:dAcc}). To move forward in time, the same procedure can be repeated for time step $t_{i+1}$. 
 
+\begin{figure}[thpb]
+\centering
+\includegraphics[width=1\linewidth]{Figures/left_to_right.png}
+\caption{Combination of left and right propagation to mass $m_n$.}
+\label{left_2_right}
+\end{figure}
+
 However, in situations where either the chosen sampling time step is too small or the number of subsystems is too large; depending on the numerical integration scheme used which typically is proportional to the inverse of time step squared, the matrices $Q_{n-1}$ and $T_{n+1}$ can be excessively large. As a result, a significant numerical error can be observed. To overcome this numerical issue, we propose to further decompose the first two equations in (\ref{eqn:leftRight}).
 
 Let the mass $m_p$ be any subsystem $p$ which is between $n$ and the left edge clamped boundary. Then, we can follow Section \ref{sec:Right} to formulate a $Q_p$ matrix that relates the clamped boundary to subsystem $p$ as
@@ -1465,14 +1494,6 @@ m_n \left [ A_n x_n+ B_n \right ] = \tau_n^R-\tau_n^L +f_n
 \eeq
 The process presented above is to derive a single localized subsystem for mass $m_n$. The choice of subsystem $n$ usually corresponds to where the control actuation is applied. In case there are multiple control inputs, we may derive a localized subsystem for each control input by following the same propagation method to attain a reduced-order representation, as shown in (\ref{left2right}).  
 
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{Figures/left_to_right.png}
-\caption{Combination of left and right propagation to mass $m_n$.}
-\label{left_2_right}
-\end{figure}
-
-
 \subsection{Decentralized Control Problem Formulation}
 \label{sec:DCTheory}
 In this section, we develop a control-centric reduced-order dynamic model based on the E-DT-TMM approach presented in Section \ref{sec:sim}. We consider the clamp-free lumped-mass system subject to a single control input applied to mass $m_n$. To this end, we can explicitly express Eq. (\ref{left2right}) as follows,
@@ -1518,7 +1539,7 @@ where $\Delta T$ denotes the sampling time and $k = 1,2,\dots.$ It is important 
 Substituting (\ref{eqn:Houbolt}) into (\ref{eqn:posEOM}) results in a discrete-time model which has smaller dimension, as shown below
 \begin{eqnarray}
 \begin{matrix}
-\begin{bmatrix}x_n(\Delta T(k+1))\\x_n(\Delta Tk)\\x_n(\Delta T(k-1))\end{bmatrix} =
+\begin{bmatrix}x_n(\Delta T(k+1))\\x_n(\Delta Tk)\\x_n(\Delta T(k-1))\end{bmatrix} =\\
 \begin{bmatrix}
 \frac{1}{C_{x_n}}(\frac{-3C_{E_n}}{\Delta T}+\frac{5m_n}{\Delta T^2})&\frac{1}{C_{x_n}}(\frac{3C_{E_n}}{2\Delta T}+\frac{-4m_n}{\Delta T^2})&\frac{1}{C_{x_n}}(\frac{-C_{E_n}}{3\Delta T}+\frac{m_n}{\Delta T^2})\\1&0&0\\0&1&0
 \end{bmatrix}
@@ -1534,15 +1555,17 @@ which can be equivalently rewritten as
 X_n (k+1) = \mathcal{A}_{nn} X_n (k) + \mathcal{B}_n (\alpha (k) +f_n (k) ) \,,
 \label{eqn:dcEOM}
 \end{eqnarray}
-where $X_n (k) = \left [ x_n(\Delta T k),\, x_n(\Delta T (k-1)),\,x_n(\Delta T(k-2)) \right ]^T$, the system matrices $(\mathcal{A}_{nn},\mathcal{B}_n)$ and the exogenous input $\alpha$ are given by
+where $X_n (k) = \left [ x_n(\Delta T k),\, x_n(\Delta T (k-1)),\,x_n(\Delta T(k-2)) \right ]^T$, the system matrices \\$(\mathcal{A}_{nn},\mathcal{B}_n)$ and the exogenous input $\alpha$ are given by
 \begin{eqnarray}
+\begin{matrix}
 \mathcal{A}_{nn} = \begin{bmatrix}
 \frac{1}{C_{x_n}}(\frac{-3C_{E_n}}{\Delta T}+\frac{5m_n}{\Delta T^2})&\frac{1}{C_{x_n}}(\frac{3C_{E_n}}{2\Delta T}+\frac{-4m_n}{\Delta T^2})&\frac{1}{C_{x_n}}(\frac{C_{E_n}}{3\Delta T}+\frac{m_n}{\Delta T^2})\\1&0&0\\0&1&0
-\end{bmatrix} \,,\;
+\end{bmatrix} \,,\;\\
 \mathcal{B}_n = 
 \begin{bmatrix}
 \frac{1}{C_{x_n}}\\0\\0
 \end{bmatrix}
+\end{matrix}
 \end{eqnarray}
 \begin{eqnarray}
 \alpha = C_{E_{n-1}}E_{n-1}+C_{E_{n+1}}E_{n+1}+C_R+C_L \,.
@@ -1671,38 +1694,39 @@ Time Step&$500 \mu s$\\
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/Mass9Controller_1.png}
+\includegraphics[width=0.8\linewidth]{Figures/Mass9Controller_1.png}
 \caption{Total system energy with E-DT-TMM based decentralized LQR controller.}
 \label{fig:DTTMM9}
 \end{figure}
+
+In this study, it is assumed that the wing is subjected to a uniform impulse torsional disturbance of $1 N-m$ over $10\mu s$, and initially, the control input is applied to mass $m_9$. This is a single control input case. By following the left and right propagation presented in Section \ref{sec:sim}, a reduced-order localized subsystem can be developed as shown in (\ref{eqn:dcEOM}). From there a discrete-time LQR controller can be designed using $Q = I_3$ and $R = 1e^5$. Figure \ref{fig:DTTMM9} shows the total system energy of the lumped-mass system, from which we can see that the proposed E-DT-TMM based decentralized controller does regulate the overall system. The total system energy considered here consists of kinetic and potential energy of the entire mass-spring-damper system. Though not shown here, for an open-loop case, the average total system energy is more than an order of magnitude higher than the highest shown in Figure \ref{fig:DTTMM9}. 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/ParetoEnergy9.png}
+\includegraphics[width=0.8\linewidth]{Figures/ParetoEnergy9.png}
 \caption{Comparison of the Pareto optimal curves between E-DT-TMM based decentralized LQR controller and full state LQR controller.}
 \label{fig:Pareto9}
 \end{figure}
-
-In this study, it is assumed that the wing is subjected to a uniform impulse torsional disturbance of $1 N-m$ over $10\mu s$, and initially, the control input is applied to mass $m_9$. This is a single control input case. By following the left and right propagation presented in Section \ref{sec:sim}, a reduced-order localized subsystem can be developed as shown in (\ref{eqn:dcEOM}). From there a discrete-time LQR controller can be designed using $Q = I_3$ and $R = 1e^5$. Figure \ref{fig:DTTMM9} shows the total system energy of the lumped-mass system, from which we can see that the proposed E-DT-TMM based decentralized controller does regulate the overall system. The total system energy considered here consists of kinetic and potential energy of the entire mass-spring-damper system. Though not shown here, for an open-loop case, the average total system energy is more than an order of magnitude higher than the highest shown in Figure \ref{fig:DTTMM9}. To better understand how well the E-DT-TMM based controller performs compared to the full state continuous LQR controller, the Pareto optimal curves for both controllers are generated, and the comparisons can be seen in Figure \ref{fig:Pareto9}. The result shows that when the available control energy is low, the full state continuous LQR controller performs better, but as the allowable control energy increases the performance of these two controllers becomes comparable. This suggests that the proposed E-DT-TMM based controller, which only uses the local state information, is as effective in controlling the overall system. This observation will be further illustrated later. 
+To better understand how well the E-DT-TMM based controller performs compared to the full state continuous LQR controller, the Pareto optimal curves for both controllers are generated, and the comparisons can be seen in Figure \ref{fig:Pareto9}. The result shows that when the available control energy is low, the full state continuous LQR controller performs better, but as the allowable control energy increases the performance of these two controllers becomes comparable. This suggests that the proposed E-DT-TMM based controller, which only uses the local state information, is as effective in controlling the overall system. This observation will be further illustrated later. 
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/FirstHalfPareto.png}
+\includegraphics[width=0.8\linewidth]{Figures/FirstHalfPareto.png}
 \caption{Total system energy with E-DT-TMM based decentralized LQR controller as control input applied from mass $m_1$ through mass $m_8$.}
 \label{fig:FirstHalfDPareto}
 \end{figure}
- 
+
+Next, the performance and effectiveness of the proposed E-DT-TMM based controller are studied by varying its applied location from $m_1$ to $m_{16}$. Figure \ref{fig:FirstHalfDPareto} shows the total system energy when the control input is applied one at a time from $m_1$ to $m_8$, while Figure \ref{fig:SecHalfDPareto} shows from $m_9$ to $m_{16}$. 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/SecondHalfPareto.png}
+\includegraphics[width=0.8\linewidth]{Figures/SecondHalfPareto.png}
 \caption{Total system energy with E-DT-TMM based decentralized LQR controller as control input applied from mass $m_9$ through mass $m_{16}$. }
 \label{fig:SecHalfDPareto}
 \end{figure}
-
-Next, the performance and effectiveness of the proposed E-DT-TMM based controller are studied by varying its applied location from $m_1$ to $m_{16}$. Figure \ref{fig:FirstHalfDPareto} shows the total system energy when the control input is applied one at a time from $m_1$ to $m_8$, while Figure \ref{fig:SecHalfDPareto} shows from $m_9$ to $m_{16}$. As expected, depending on the location of applied input and its relationship with the corresponding mode shapes, the control performance at some locations are deemed better than the others. This confirms with the common understanding in structural control that the level of controllability of a structural mode is directly affected by the location of control input. Therefore, as we can see from the Pareto optimal curves, the control actuation is more effective when it is applied near the center, where all the structural modes appear to be eminent, and least effective when it is applied at both ends, where some primary modes are least controllable hence require higher control energy. To compare the closed-loop responses between the proposed discrete decentralized LQR controller and the full state continuous LQR controller, Figures \ref{time_m_1}a through \ref{time_m_1}c shows the torsional displacement comparisons at $m_1$, $m_9$, and $m_{16}$, respectively, when the control input is applied at mass $m_9$.
+As expected, depending on the location of applied input and its relationship with the corresponding mode shapes, the control performance at some locations are deemed better than the others. This confirms with the common understanding in structural control that the level of controllability of a structural mode is directly affected by the location of control input. Therefore, as we can see from the Pareto optimal curves, the control actuation is more effective when it is applied near the center, where all the structural modes appear to be eminent, and least effective when it is applied at both ends, where some primary modes are least controllable hence require higher control energy. To compare the closed-loop responses between the proposed discrete decentralized LQR controller and the full state continuous LQR controller, Figures \ref{time_m_1}a through \ref{time_m_1}c shows the torsional displacement comparisons at $m_1$, $m_9$, and $m_{16}$, respectively, when the control input is applied at mass $m_9$.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=.65\linewidth]{Figures/Position.png}
+\includegraphics[width=.75\linewidth]{Figures/Position.png}
 \caption{a) Torsional displacement at mass $m_1$, b) torsional displacement at mass $m_9$, and c) torsional displacement at mass $m_{16}$, when input is applied at $m_9$.}
 \label{time_m_1}
 \end{figure}
@@ -1725,19 +1749,19 @@ Total System Energy (J) & 22.968 & 8.530 & 8.678 & 23.934 \\
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/twoinputE.png}
+\includegraphics[width=0.9\linewidth]{Figures/twoinputE.png}
 \caption{Time response of the total system energy at the four pairs of input locations.}
 \label{twosystemE}
 \end{figure}
 
-For a single input case, we showed that it was most efficient when applied at or near the center of the structure. However, in the case of multiple control inputs, the placement of actuation becomes a little sophisticated. For illustration, here we consider a case of two control inputs. By following the model reduction process presented in Section \ref{sec:DTTMM} for each control input, we obtain two reduced-order models as shown in (\ref{multiple}), and their mathematical descriptions would depend on where the control inputs are applied. For comparisons, we consider only four pairs of mass locations: (8,9), (7,10), (3,15), and (5,13). Table \ref{t:twoinputs} shows the comparisons of the total system energy for the four pairs of input locations, while subjected to similar levels of control input energy. Figure \ref{twosystemE} shows the time response of the total system energy and Figure \ref{twosystemP} the time response at the tip mass (i.e. $m_{16}$). It was shown earlier for single input case that control actuation at either mass 8 or mass 9 rendered the best performance. It is interesting to observe that the combined actuation at these two locations does not make a favorable result, as evidenced in Table \ref{t:twoinputs} and Figures \ref{twosystemE}-\ref{twosystemP}. The reason is that when two actuation are adjacent to each other, their effective range becomes redundant or may even cancel out the total efficiency. In the case of the pair (3,15), though the two masses are farther apart, their individual performance was rather poor; see Figures \ref{fig:FirstHalfDPareto} and \ref{fig:SecHalfDPareto}, hence the combined effect is not getting better. Pairs (7,10) and (5,13) show a good spatial separation as well as a good individual performance from the earlier analysis. Hence their collective efforts are best reflected in the proposed state propagation approach and are more efficient in suppressing overall vibrational motion. In summary, the study shown here can be used as a guideline for determining the placement of control actuation when there are multiple control inputs.
-
+For a single input case, we showed that it was most efficient when applied at or near the center of the structure. However, in the case of multiple control inputs, the placement of actuation becomes a little sophisticated. For illustration, here we consider a case of two control inputs. By following the model reduction process presented in Section \ref{sec:DTTMM} for each control input, we obtain two reduced-order models as shown in (\ref{multiple}), and their mathematical descriptions would depend on where the control inputs are applied. For comparisons, we consider only four pairs of mass locations: (8,9), (7,10), (3,15), and (5,13). Table \ref{t:twoinputs} shows the comparisons of the total system energy for the four pairs of input locations, while subjected to similar levels of control input energy. Figure \ref{twosystemE} shows the time response of the total system energy and Figure \ref{twosystemP} the time response at the tip mass (i.e. $m_{16}$). It was shown earlier for single input case that control actuation at either mass 8 or mass 9 rendered the best performance. It is interesting to observe that the combined actuation at these two locations does not make a favorable result, as evidenced in Table \ref{t:twoinputs} and Figures \ref{twosystemE}-\ref{twosystemP}. 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/twoinput_tip.png}
+\includegraphics[width=0.9\linewidth]{Figures/twoinput_tip.png}
 \caption{The tip mass displacement comparisons at the four pairs of input locations.}
 \label{twosystemP}
 \end{figure}
+The reason is that when two actuation are adjacent to each other, their effective range becomes redundant or may even cancel out the total efficiency. In the case of the pair (3,15), though the two masses are farther apart, their individual performance was rather poor; see Figures \ref{fig:FirstHalfDPareto} and \ref{fig:SecHalfDPareto}, hence the combined effect is not getting better. Pairs (7,10) and (5,13) show a good spatial separation as well as a good individual performance from the earlier analysis. Hence their collective efforts are best reflected in the proposed state propagation approach and are more efficient in suppressing overall vibrational motion. In summary, the study shown here can be used as a guideline for determining the placement of control actuation when there are multiple control inputs.
 
 \section{Active Twist Aircraft Control and Estimation}
 To effectively create a controller to enable active twist, the control derivatives of the flight platform must be estimated. The development of an aerodynamic database containing the appropriate collection of control derivatives will be the first sub-task, and the subsequent evolution of the control laws will be the second subtask.
@@ -1747,7 +1771,7 @@ The creation of an aerodynamic database is necessary to create a useful localize
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/SimulationMultiAngleView.png}
+\includegraphics[width=.8\linewidth]{Figures/SimulationMultiAngleView.png}
 \caption{Simulated wing geometry used to generate the aerodynamic database in the Dynamic Tornado VLM tool}
 \label{fig:AmultiAngle}
 \end{figure}
@@ -1756,7 +1780,7 @@ Figure \ref{fig:AmultiAngle} shows the geometry of the wings used to develop the
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/SegmentConverge.png}
+\includegraphics[width=.7\linewidth]{Figures/SegmentConverge.png}
 \caption{Pitch stability derivative convergence study}
 \label{fig:Aconverge}
 \end{figure}
@@ -1775,7 +1799,7 @@ The goal of the control design is to have a standard autopilot – for this effo
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/Phase1Control.png}
+\includegraphics[width=.8\linewidth]{Figures/Phase1Control.png}
 \caption{Hierarchical control architecture includes an outer-loop controls the rigid-body dynamics of the aircraft while an inner-loop provides aileron and wing twist control}
 \label{fig:AControlBlockDiag}
 \end{figure}
@@ -1917,29 +1941,23 @@ P_{k\vert k} = (I-K_kC)P_{k\vert k-1}
 Two simulations were performed to access the capabilities of the active twist configuration, the first is the ability of the configured wing to generate proverse yaw and the second is the ability to avoid tip-induced stall.
 
 \subsubsection{Proverse Yaw Turn Numeric Simulation}
-This simulation was intended to mimic flight patterns so the angle of attack started off at eight degrees and slowly decreased until the plane reaches cruise conditions, as is shown in Figure \ref{fig:AOAPat}.
+This simulation was intended to mimic flight patterns so the angle of attack started off at eight degrees and slowly decreased until the plane reaches cruise conditions, as is shown in Figure \ref{fig:yaw} a). To create a proverse yaw effect the ailerons and twists were commanded in opposing saw tooth patterns an example of the twist pattern is shown in Figure \ref{fig:yaw} b). 
 
 \begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{Figures/ProverseYawAoA.png}
-\caption{Angle of attack pattern to mimic take off and cruise}
-\label{fig:AOAPat}
-\end{figure}
-
-To create a proverse yaw effect the ailerons and twists were commanded in opposing saw tooth patterns an example of the twist pattern is shown below. 
-
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{Figures/ProverseYawTwist.png}
-\caption{Opposing twist patterns to counter the ailerons during turning maneuvers}
-\label{fig:APTwist}
+\hfill
+\subfigure[Angle of Attack]{\includegraphics[width=7cm]{Figures/ProverseYawAoA.png}}
+\hfill
+\subfigure[Twist Pattern]{\includegraphics[width=7cm]{Figures/ProverseYawTwist.png}}
+\hfill
+\caption{Simulation parameters, the angle of attack replicating take off and the commanded twist pattern}
+\label{fig:yaw}
 \end{figure}
 
 In the simulation, the sensor noise is added by decomposing the known twist angles into their proportional gravitational values and then added in the white noise observed from the accelerometers reading into the Beaglebone Black. The noise is then rounded off to the nearest least significant digit to simulate the ADC. Then the inverse tangent is taken of the noisy measurements in the same way it would be from raw data to create the local twist. The same process is done for the gyro readings though since they directly measure the twist rate the noise can be directly added. A periodic disturbance is applied to the wing to represent environmental conditions. The controller as described above is implemented with the integration of the error being done by a fourth order Runge-Kutta method. There are also sample times enforced for the actuation, sensing, and estimation of the state matrix.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{Figures/AuroraProverseYawTwist.png}
+\includegraphics[width=.9\linewidth]{Figures/AuroraProverseYawTwist.png}
 \caption{Comparison of the commanded, estimated, and actual tip twist in the simulation}
 \label{fig:APcommand}
 \end{figure}
@@ -2011,7 +2029,7 @@ The controllers that we established in the earlier sections addresses the struct
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=.75\linewidth]{./Figures/LD5454MotivationPlot.png}
+\includegraphics[width=.8\linewidth]{./Figures/LD5454MotivationPlot.png}
 \caption{Lift drag ratio of the dynamic twisting at 4 Hz frequency compared with the static wind tunnel result}
 \label{fig:LDmot}
 \end{figure}
@@ -2083,6 +2101,8 @@ In this study,  the MATLAB Neural Network package was used to generate and train
 
 The collected wind tunnel data consists of 129 static wing twist tests and 45 dynamic wing twist tests. Of the 129 static tests, 100 were from the symmetric wing twist, while the remaining 29 tests were from the asymmetric twist. Also, all 45 dynamic wing twist tests were from symmetric wing twist, in which 33 of them were obtained by varying the dynamic pressure from 1 to 7 PSF. 
 
+To generate an appropriate neural network model for optimum wing tip twist pattern determination, a feed forward network configuration was used, where the wind tunnel data were divided randomly into training data, validation data, and testing data at a ratio of 65~\%, 15~\%, and 20~\%, respectively. The input data are dynamic pressure, right wing twist angle, left wing twist angle, right wing twist velocity, left wing twist velocity, angle of attack, and sideslip angle.
+
 \begin{figure}[thpb]
 \centering
 \subfigure[]{\includegraphics[width=0.475\linewidth]{./Figures/NNCLMaxEnvelope-01.png}} 
@@ -2091,6 +2111,7 @@ The collected wind tunnel data consists of 129 static wing twist tests and 45 dy
 \label{fig:NNCLMax}
 \end{figure}
 
+The data set described above was used to train several different neural network configurations by utilizing different gradient decent training methods to assess the effects of various neural network geometries and training methods on the accuracy of the resulting model. Figure~\ref{fig:NNconfig} shows the geometry of the proposed neural networks. A single layer with ten neurons in the hidden layer and an output layer was the configuration most often used, but a configuration with 30 neurons in the hidden layer was also used. Finally, a network with two hidden layers with ten neurons in each layer was developed as well. Every layer included a biasing variable including the output layer and a log-sigmoid for the transfer function. The networks were either trained with Bayesian regularization back propagation (Bayesian) or scaled conjugate gradient backpropagation (SCG), and the cost function was either mean squared error (MSE) or mean absolute error (MAE). The training was completed either after 1000 iterations or once the error gradient was found smaller than $1e^{-7}$. The results of the training are given in Table~\ref{tab:error}.
 \begin{figure}[thpb]
 \centering
 \subfigure[]{\includegraphics[width=0.475\linewidth]{./Figures/NNCDMaxEnvelope-01.png}} 
@@ -2098,11 +2119,6 @@ The collected wind tunnel data consists of 129 static wing twist tests and 45 dy
 \caption{Comparison of maximum (a) and minimum (b) $C_D$ envelopes for neural networks}
 \label{fig:NNCDMax}
 \end{figure}
-
-To generate an appropriate neural network model for optimum wing tip twist pattern determination, a feed forward network configuration was used, where the wind tunnel data were divided randomly into training data, validation data, and testing data at a ratio of 65~\%, 15~\%, and 20~\%, respectively. The input data are dynamic pressure, right wing twist angle, left wing twist angle, right wing twist velocity, left wing twist velocity, angle of attack, and sideslip angle.
-
-The data set described above was used to train several different neural network configurations by utilizing different gradient decent training methods to assess the effects of various neural network geometries and training methods on the accuracy of the resulting model. Figure~\ref{fig:NNconfig} shows the geometry of the proposed neural networks. A single layer with ten neurons in the hidden layer and an output layer was the configuration most often used, but a configuration with 30 neurons in the hidden layer was also used. Finally, a network with two hidden layers with ten neurons in each layer was developed as well. Every layer included a biasing variable including the output layer and a log-sigmoid for the transfer function. The networks were either trained with Bayesian regularization back propagation (Bayesian) or scaled conjugate gradient backpropagation (SCG), and the cost function was either mean squared error (MSE) or mean absolute error (MAE). The training was completed either after 1000 iterations or once the error gradient was found smaller than $1e^{-7}$. The results of the training are given in Table~\ref{tab:error}.
-
 \begin{table}[h]
 \caption{Performance of neural networks on training data}
 \label{tab:error}
@@ -2178,43 +2194,42 @@ To assess the sensitivity of the optimal wing twist pattern, the frequency of th
 
 From the static wind tunnel test data at a given lift requirement, the $C_D$ coefficient is around 0.033, which results in a drag reduction of 3\% to 5.75\% for the drag values listed in Table~\ref{tab:drag}. Figure~\ref{fig:NNResults} shows in blue the initial twist pattern, and in orange, the optimal twist pattern resulted from the constrained optimization. The initial conditions affect the general shape of the optimal twist pattern. It also shows that no matter what the initial frequency is, the optimal solution results in a sawtooth pattern but that the optimized result tends to retain the original frequency content. This could be used as a means of adapting to the requirements during actual implementation. Eventually, these optimal patterns can be extended to other patterns for various environmental conditions and flight demands, and they can be combined to best tailored to achieve a near optimal solution.
 
-Figure~\ref{fig:NNResults} also shows the lift and drag coefficients for the optimal twist pattern. It should be noted that in general the drag is reduced via swift downward twists, but it does not start increasing at the same time the lift does. In fact, it does not start growing until lift induced drag dominates. This effect and the effect of viscosity explain the phase shift that seen between the twist pattern and the drag pattern. Note that these effects are somewhat frequency dependent, by the time it gets to 5 Hz, as shown in Figures ~\ref{fig:NNResults} d), most of the behavior is dominated by lift-induced drag, resulting in a sharper more reactive drag pattern.
-
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=0.75\linewidth]{./Figures/NNResults-01.png}
+\includegraphics[width=1\linewidth]{./Figures/NNResults-01.png}
 \caption{Initial twist pattern in blue, optimal twist pattern in orange, lift coefficient from optimal twist pattern in purple, and optimal drag pattern in green for initial twist patterns of: a) 0 Hz, b) 3 Hz, c) 4 Hz, d) 5 Hz.}
 \label{fig:NNResults}
 \end{figure}
 
+Figure~\ref{fig:NNResults} also shows the lift and drag coefficients for the optimal twist pattern. It should be noted that in general the drag is reduced via swift downward twists, but it does not start increasing at the same time the lift does. In fact, it does not start growing until lift induced drag dominates. This effect and the effect of viscosity explain the phase shift that seen between the twist pattern and the drag pattern. Note that these effects are somewhat frequency dependent, by the time it gets to 5 Hz, as shown in Figures ~\ref{fig:NNResults} d), most of the behavior is dominated by lift-induced drag, resulting in a sharper more reactive drag pattern.
+
 \subsection{Results from the Aeroelastic Model}
  The optimization run by using the aeroelastic model has an enormous run-time, which is in the order of 50-100 hours. This severely limits its capability to adequately test different flight conditions, cost functions, and constraints, let alone the possibility of performing in real-time during the flight. However, the validated aeroelastic model still plays a critical role during the preliminary design stage, where it can be utilized to generate simulated flight data to be used for training the neural networks.   
+
+\begin{figure}[thpb]
+\centering
+\includegraphics[width=0.9\linewidth]{./Figures/AeroOptimalTwist-01.png}
+\caption{Inital input twist and resulting output twist from optimization of the aeroelastic model}
+\label{fig:AeroTwist}
+\end{figure}
+
 
 In this case, the optimization is performed using twist frequency at 5 Hz as the initial value and the simulation time is reduced from 2 sec to 1.5 sec, to expedite the run time. Figure~\ref{fig:AeroTwist} shows the optimal tip twist pattern. We can see that the optimal result is a simple oscillation between -0.03 rad and -0.04 rad, with some M-shaped characteristics reminiscent of the pattern seen in the 5 Hz optimal pattern from Figure~\ref{fig:NNResults}d). The optimal twist pattern for a zero degree twist input is nearly identical to the 5 Hz initial conditions, meaning that the results are relatively independent of the initial conditions. This suggests that there is little or no null space in the solution set to the aeroelastic model. As a result, the twist pattern in Fig.~\ref{fig:AeroTwist} shows the optimal tip twist that occurs regardless of initial conditions.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{./Figures/AeroOptimalTwist-01.png}
-\caption{Inital input twist and resulting output twist from optimization of the aeroelastic model}
-\label{fig:AeroTwist}
-\end{figure}
-
-\begin{figure}[thpb]
-\centering
-\includegraphics[width=1\linewidth]{./Figures/AeroCLOpt-01.png}
+\includegraphics[width=0.9\linewidth]{./Figures/AeroCLOpt-01.png}
 \caption{Optimized $C_L$ resulting from optimal tip twist in Figure \ref{fig:AeroTwist}}
 \label{fig:AeroCL}
 \end{figure}
 
+Figures \ref{fig:AeroCL} and \ref{fig:AeroCD} show the resulting lift and drag coefficients for optimal tip twist pattern shown in Fig.~\ref{fig:AeroTwist}. This correlates to a drag reduction of approximately 1.5~\% when compared to the static drag coefficient for the same lift.
 \begin{figure}[thpb]
 \centering
-\includegraphics[width=1\linewidth]{./Figures/OptimalAeroCD-01.png}
+\includegraphics[width=0.9\linewidth]{./Figures/OptimalAeroCD-01.png}
 \caption{Optimized $C_D$ curve resulting from optimal tip twist in Figure \ref{fig:AeroTwist}}
 \label{fig:AeroCD}
 \end{figure}
-
-Figures \ref{fig:AeroCL} and \ref{fig:AeroCD} show the resulting lift and drag coefficients for optimal tip twist pattern shown in Fig.~\ref{fig:AeroTwist}. This correlates to a drag reduction of approximately 1.5~\% when compared to the static drag coefficient for the same lift.
-
 In summary, while the optimal twist pattern from the aeroelastic model may be a little more conservative than the one from the neural network, we are confident that both optimal twist patterns would indeed result in drag reduction, even if they are not quite to the postulated magnitude. These two analysis models play a unique role in the development of flight systems. At initial preliminary design cycle, the aeroelastic model can be used to assess and determine the favorable wing twist patterns over a range of flight scenarios, and the simulated data can be generated and used to train and validate the neural networks to attain the most accurate neural network model. Subsequently, the trained neural network model can then be integrated with onboard flight control systems to enable real-time mission adaptive flight controls.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2267,31 +2282,43 @@ Beyond the continued use of the control and modeling architecture developed in t
 \appendix
 \chapter{Constants from Decentralized Control Construction}
 \[
-C_{x_n} = \frac{G_{21}H_{11}^nQ_{12}-G_{11}H_{11}^nQ_{22}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}}+m_2A_2+\frac{F_{11}^{n+1}R_{11}T_{21}-F_{11}^{n+1}R_{21}T_{11}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}} \,.
+\begin{matrix}
+C_{x_n} = \frac{G_{21}H_{11}^nQ_{12}-G_{11}H_{11}^nQ_{22}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}}\\+m_2A_2\\+\frac{F_{11}^{n+1}R_{11}T_{21}-F_{11}^{n+1}R_{21}T_{11}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}} \,.
+\end{matrix}
 \]
 \[
+\begin{matrix}
 C_{E_{n-1}}= \frac{-G_{11}H_c^nQ_{22}+G_{21}H_c^nQ_{12}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}} \,.
+\end{matrix}
 \]
 \[
-C_{E_n} = \frac{F_c^{n+1}R_{21}T_{11}-F_c^{n+1}R_{11}T_{21}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}}-\frac{G_{11}H_c^nQ_{22}-G_{21}H_c^nQ_{12}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}} \,.
+\begin{matrix}
+C_{E_n} = \frac{F_c^{n+1}R_{21}T_{11}-F_c^{n+1}R_{11}T_{21}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}}\\-\frac{G_{11}H_c^nQ_{22}-G_{21}H_c^nQ_{12}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}} \,.
+\end{matrix}
 \]
 \[
+\begin{matrix}
 C_{E_{n+1}} = \frac{F_c^{n+1}R_{11}T_{21}-F_c^{n+1}R_{21}T_{11}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}} \,.
+\end{matrix}
 \]
 \[
+\begin{matrix}
 C_R = \frac{R_{23}T_{11}-R_{13}T_{21}-T_{11}T_{23}+T_{13}T_{21}}{R_{12}T_{21}-R_{22}T_{11}+F_{12}^{n+1}R_{11}T_{21}-F_{12}^{n+1}R_{21}T_{11}} \,.
+\end{matrix}
 \]
 \[
+\begin{matrix}
 C_L = \frac{Q_{12}Q_{23}-Q_{13}Q_{22}+G_{13}Q_{22}-G_{23}Q_{12}}{G_{12}Q_{22}-G_{22}Q_{12}+G_{11}H_{12}^nQ_{22}-G_{21}H_{12}^nQ_{12}} \,.
+\end{matrix}
 \]
 
 When $j<n$,
 \[
-C_{E_j^n} = \frac{-1}{Q_{11}-\frac{Q_{12}Q_{21}}{Q_{22}}}\left[\left(\frac{Q_{12}G_{21}}{Q_{22}}\right)H_c^j+\frac{\left(G_{11}H_{12}^j+G_{12}-\frac{Q_{12}Q_{21}-H_{12}^j+Q_{12}G_{22}}{Q_{22}}\right)\left(\frac{T_{11}R_{21}}{T_{21}}-R_{11}\right)F_c^{j+1}}{R_{11}F_{12}^{j+1}+R_{22}-\frac{T_{11}(R_{21}F_{12}^{j+1}+R_{22})}{T_{21}}}\right] \,,
+C_{E_j^n} = \frac{-1}{Q_{11}-\frac{Q_{12}Q_{21}}{Q_{22}}}\left[\begin{matrix}\left(\frac{Q_{12}G_{21}}{Q_{22}}\right)H_c^j+\\\frac{\left(G_{11}H_{12}^j+G_{12}-\frac{Q_{12}Q_{21}-H_{12}^j+Q_{12}G_{22}}{Q_{22}}\right)\left(\frac{T_{11}R_{21}}{T_{21}}-R_{11}\right)F_c^{j+1}}{R_{11}F_{12}^{j+1}+R_{22}-\frac{T_{11}(R_{21}F_{12}^{j+1}+R_{22})}{T_{21}}}\end{matrix}\right] \,,
 \]
 and when $j>n$,
 \[
-C_{E_j^n} = \frac{-1}{T_{21}-\frac{T_{22}}{T_{12}}}\left[\frac{(T_{22}R_{11}-R_{21})F_c^{j+1}}{T_{12}}+\frac{\left(G_{21}-\frac{Q_{22}}{Q_{12}}\right)H_c^j\left(R_{21}F_{12}^{j+1}+R_{22}-\frac{T_{22}}{T_{12}}\left(R_{11}F_{12}^{j+1}+R_{12}\right)\right)}{\frac{Q_{22}}{Q_{12}}\left(G_{11}H_{12}^j+G_{12}\right)-G_{21}H_{12}^j+G_{22}}\right] \,.
+C_{E_j^n} = \frac{-1}{T_{21}-\frac{T_{22}}{T_{12}}}\left[\begin{matrix}\frac{(T_{22}R_{11}-R_{21})F_c^{j+1}}{T_{12}}+\\\frac{\left(G_{21}-\frac{Q_{22}}{Q_{12}}\right)H_c^j\left(R_{21}F_{12}^{j+1}+R_{22}-\frac{T_{22}}{T_{12}}\left(R_{11}F_{12}^{j+1}+R_{12}\right)\right)}{\frac{Q_{22}}{Q_{12}}\left(G_{11}H_{12}^j+G_{12}\right)-G_{21}H_{12}^j+G_{22}}\end{matrix}\right] \,.
 \]
 
 
